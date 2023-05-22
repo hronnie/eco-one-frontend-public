@@ -5,22 +5,25 @@
     id="sidebar1"
     visible
 >
-    <c-sidebar-brand
-            [brandFull]="{
-      src: 'assets/img/brand/coreui-pro-angular-white.svg',
-      width: 190,
-      height: 35,
-      alt: 'CoreUI Logo'
-    }"
-            [brandNarrow]="{
-      src: 'assets/img/brand/coreui-signet-white.svg',
-      width: 46,
-      height: 46,
-      alt: 'CoreUI Logo'
-    }"
-            [routerLink]="[]"
-    >
-    </c-sidebar-brand>
+    <div style="background-color: transparent;
+    background-image: linear-gradient(150deg, #22577A 30%, #57CC99 76%);">
+        <c-sidebar-brand
+                [brandFull]="{
+          src: 'assets/img/ECO-logo1.png',
+          width: 120,
+          height: 110,
+          alt: 'CoreUI Logo'
+        }"
+                [brandNarrow]="{
+          src: 'assets/img/brand/coreui-signet-white.svg',
+          width: 46,
+          height: 46,
+          alt: 'CoreUI Logo'
+        }"
+                [routerLink]="[]"
+        >
+        </c-sidebar-brand>
+    </div>
 
     <c-sidebar-nav [navItems]="navItems"></c-sidebar-nav>
 
