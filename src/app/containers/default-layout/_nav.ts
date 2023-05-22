@@ -20,6 +20,11 @@ export const navItems: INavData[] = [
         name: 'Tanfolyamok'
     },
     {
+        name: 'Elvégzett tanfolyamok',
+        url: '/completed-training',
+        iconComponent: { name: 'cil-calendar-check'},
+    },
+    {
         name: 'Email sablonok',
         url: '/email-template',
         iconComponent: { name: 'cil-envelope-closed'},

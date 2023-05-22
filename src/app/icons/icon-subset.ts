@@ -92,6 +92,7 @@ import {
     cilUserFollow,
     cilUserUnfollow,
 } from '@coreui/icons';
+import {cilCalendarCheck} from "@coreui/icons/js/free/cil-calendar-check";
 
 export const iconSubset = {
     cibCcAmex,
@@ -125,6 +126,7 @@ export const iconSubset = {
     cilBookmark,
     cilCalculator,
     cilCalendar,
+    cilCalendarCheck,
     cilChart,
     cilChartPie,
     cilCheck,
@@ -220,6 +222,7 @@ export enum IconSubset {
     cilBookmark = 'cilBookmark',
     cilCalculator = 'cilCalculator',
     cilCalendar = 'cilCalendar',
+    cilCalendarCheck = 'cilCalendarCheck',
     cilChart = 'cilChart',
     cilChartPie = 'cilChartPie',
     cilCheck='cilCheck',

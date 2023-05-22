@@ -35,6 +35,11 @@ const routes: Routes = [
                 path: 'invitation',
                 loadChildren: () =>
                     import('./views/invitation/invitation.module').then((m) => m.InvitationModule)
+            },
+            {
+                path: 'completed-training',
+                loadChildren: () =>
+                    import('./views/completedTraining/completedTraining.module').then((m) => m.CompletedTrainingModule)
             }
         ]
     },
