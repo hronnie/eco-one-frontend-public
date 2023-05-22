@@ -20,6 +20,21 @@ const routes: Routes = [
                 path: 'dashboard',
                 loadChildren: () =>
                     import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule)
+            },
+            {
+                path: 'email-template',
+                loadChildren: () =>
+                    import('./views/emailTemplate/emailTemplate.module').then((m) => m.EmailTemplateModule)
+            },
+            {
+                path: 'student',
+                loadChildren: () =>
+                    import('./views/student/student.module').then((m) => m.StudentModule)
+            },
+            {
+                path: 'invitation',
+                loadChildren: () =>
+                    import('./views/invitation/invitation.module').then((m) => m.InvitationModule)
             }
         ]
     },

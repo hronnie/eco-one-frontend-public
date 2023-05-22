@@ -12,7 +12,7 @@ export const navItems: INavData[] = [
     },
     {
         name: 'Tanítványok',
-        url: '/smart-table',
+        url: '/student',
         iconComponent: { name: 'cil-address-book'},
     },
     {
@@ -21,12 +21,12 @@ export const navItems: INavData[] = [
     },
     {
         name: 'Email sablonok',
-        url: '/smart-table',
+        url: '/email-template',
         iconComponent: { name: 'cil-envelope-closed'},
     },
     {
         name: 'Meghívók küldése',
-        url: '/smart-table',
+        url: '/invitation',
         iconComponent: { name: 'cil-send'},
     },
 ];
