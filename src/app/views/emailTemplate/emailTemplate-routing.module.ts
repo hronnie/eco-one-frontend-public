@@ -8,7 +8,7 @@ const routes: Routes = [
         path: '',
         component: EmailTemplateComponent,
         data: {
-            title: $localize`Kezdőlap`
+            title: $localize`Email sablonok`
         }
     }
 ];

@@ -8,7 +8,7 @@ const routes: Routes = [
         path: '',
         component: InvitationComponent,
         data: {
-            title: $localize`Kezdőlap`
+            title: $localize`Meghívók küldése`
         }
     }
 ];

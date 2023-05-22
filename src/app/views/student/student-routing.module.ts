@@ -8,7 +8,7 @@ const routes: Routes = [
         path: '',
         component: StudentComponent,
         data: {
-            title: $localize`Kezdőlap`
+            title: $localize`Tanítványok`
         }
     }
 ];
