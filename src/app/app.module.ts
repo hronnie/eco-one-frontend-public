@@ -29,6 +29,8 @@ import {
 } from '@coreui/angular-pro';
 
 import {IconModule, IconSetService} from '@coreui/icons-angular';
+import {HttpClientModule} from "@angular/common/http";
+import {FormsModule} from "@angular/forms";
 
 const APP_CONTAINERS = [
     DefaultAsideComponent,
@@ -52,7 +54,9 @@ const APP_CONTAINERS = [
         NavModule,
         ButtonModule,
         SidebarModule,
-        BadgeModule
+        BadgeModule,
+        HttpClientModule,
+        FormsModule
     ],
     providers: [
         {

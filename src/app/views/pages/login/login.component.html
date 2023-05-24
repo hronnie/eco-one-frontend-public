@@ -1,0 +1,56 @@
+<div class="bg-light min-vh-100 d-flex flex-row align-items-center">
+  <c-container breakpoint="md">
+    <c-row class="justify-content-center">
+      <c-col lg="10" xl="8">
+        <c-card-group>
+          <c-card class="p-4">
+            <c-card-body>
+              <form cForm (change)="updateValues()">
+                <h1>Bejelentkezés</h1>
+                <p class="text-medium-emphasis">Jelentkezz be</p>
+                <c-input-group class="mb-3">
+                  <span cInputGroupText>
+                    <svg cIcon name="cilUser"></svg>
+                  </span>
+                  <input autoComplete="username" id="username" cFormControl placeholder="Email" [(ngModel)]="username"/>
+                </c-input-group>
+                <c-input-group class="mb-4">
+                  <span cInputGroupText>
+                    <svg cIcon name="cilLockLocked"></svg>
+                  </span>
+                  <input id="password"
+                    autoComplete="current-password"
+                    cFormControl
+                    placeholder="Jelszó"
+                    type="password"
+                    [(ngModel)]="password"
+                  />
+                </c-input-group>
+                <c-row>
+                  <c-col xs="6">
+                    <button cButton class="px-4" color="primary" (click)="onSubmit()">
+                      Bejelentkezés
+                    </button>
+                  </c-col>
+                  <c-col class="text-right" xs="6">
+                  </c-col>
+                </c-row>
+              </form>
+            </c-card-body>
+          </c-card>
+          <c-card [ngStyle]="{'minWidth.%': 44}" class="text-white bg-primary py-5">
+            <c-card-body class="text-center">
+              <div>
+                <h2>Regisztráció</h2>
+                <p>
+                  Regisztrálni közvetlen nem lehetséges. Ha szükséged van hozzáférésre, akkor írj kérlek az aron.harsfalvi@gmail.com-ra.
+                </p>
+
+              </div>
+            </c-card-body>
+          </c-card>
+        </c-card-group>
+      </c-col>
+    </c-row>
+  </c-container>
+</div>

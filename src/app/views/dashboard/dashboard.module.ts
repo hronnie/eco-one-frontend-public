@@ -19,6 +19,7 @@ import {IconModule} from '@coreui/icons-angular';
 
 import {DashboardRoutingModule} from './dashboard-routing.module';
 import {DashboardComponent} from './dashboard.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
     imports: [
@@ -36,7 +37,8 @@ import {DashboardComponent} from './dashboard.component';
         ButtonModule,
         ButtonGroupModule,
         AvatarModule,
-        TableModule
+        TableModule,
+        HttpClientModule
     ],
     declarations: [DashboardComponent]
 })

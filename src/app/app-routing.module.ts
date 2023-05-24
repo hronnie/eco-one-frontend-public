@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 import {DefaultLayoutComponent} from './containers';
+import {AuthGuardService} from "./services/authGuard.service";
 
 const routes: Routes = [
     {
@@ -16,8 +17,16 @@ const routes: Routes = [
             title: $localize`Home`
         },
         children: [
+            { path: '', redirectTo: '/pages/login', pathMatch: 'full' },
+            {
+                path: 'pages',
+                loadChildren: () =>
+                    import('./views/pages/pages.module').then((m) => m.PagesModule)
+            },
+            // { path: 'login', component: LoginComponent },
             {
                 path: 'dashboard',
+                canActivate: [AuthGuardService],
                 loadChildren: () =>
                     import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule)
             },
@@ -40,7 +49,7 @@ const routes: Routes = [
                 path: 'completed-training',
                 loadChildren: () =>
                     import('./views/completedTraining/completedTraining.module').then((m) => m.CompletedTrainingModule)
-            }
+            },
         ]
     },
     {path: '**', redirectTo: 'dashboard'}
