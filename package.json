@@ -29,6 +29,8 @@
     "@coreui/coreui-pro": "~4.3.4",
     "@coreui/icons": "^2.1.0",
     "@coreui/icons-angular": "~4.2.4",
+    "ag-grid-angular": "^29.3.5",
+    "ag-grid-community": "^29.3.5",
     "date-fns": "^2.29.3",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

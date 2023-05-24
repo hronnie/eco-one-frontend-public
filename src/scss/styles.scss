@@ -16,3 +16,7 @@ $enable-rtl: true;
 
 // If you want to add something do it here
 @import "custom";
+
+@import "~ag-grid-community/styles/ag-grid.css";
+@import "~ag-grid-community/styles/ag-theme-alpine.css";
+

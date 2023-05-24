@@ -1,6 +1,9 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
+import { AgGridModule } from 'ag-grid-angular';
+import { FormsModule } from '@angular/forms';
+
 
 import {
     AvatarModule,
@@ -31,12 +34,14 @@ import {StudentComponent} from "./student.component";
         GridModule,
         ProgressModule,
         ReactiveFormsModule,
+        FormsModule,
         ButtonModule,
         FormModule,
         ButtonModule,
         ButtonGroupModule,
         AvatarModule,
-        TableModule
+        TableModule,
+        AgGridModule,
     ],
     declarations: [StudentComponent]
 })
