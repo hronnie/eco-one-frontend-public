@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {AuthService} from "../../../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-login',
@@ -10,7 +11,8 @@ export class LoginComponent {
     username: string = '';
     password: string = '';
 
-    constructor(private authService: AuthService) {
+    constructor(private authService: AuthService,
+                private router: Router) {
     }
 
     updateValues() {
@@ -19,15 +21,12 @@ export class LoginComponent {
     }
 
     onSubmit() {
-        debugger;
         this.authService.login(this.username, this.password).subscribe(
             data => {
-                debugger;
                 localStorage.setItem('access_token', data.token);
-                // You are logged in. Navigate to another page, etc.
+                this.router.navigate(['/dashboard']);
             },
             err => {
-                debugger;
                 // Handle error
                 console.log(err);
             }

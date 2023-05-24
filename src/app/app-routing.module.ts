@@ -3,6 +3,9 @@ import {RouterModule, Routes} from '@angular/router';
 
 import {DefaultLayoutComponent} from './containers';
 import {AuthGuardService} from "./services/authGuard.service";
+import {Page404Component} from "./views/pages/page404/page404.component";
+import {Page500Component} from "./views/pages/page500/page500.component";
+import {LoginComponent} from "./views/pages/login/login.component";
 
 const routes: Routes = [
     {
@@ -17,13 +20,12 @@ const routes: Routes = [
             title: $localize`Home`
         },
         children: [
-            { path: '', redirectTo: '/pages/login', pathMatch: 'full' },
+            { path: '', redirectTo: '/login', pathMatch: 'full' },
             {
                 path: 'pages',
                 loadChildren: () =>
                     import('./views/pages/pages.module').then((m) => m.PagesModule)
             },
-            // { path: 'login', component: LoginComponent },
             {
                 path: 'dashboard',
                 canActivate: [AuthGuardService],
@@ -51,6 +53,27 @@ const routes: Routes = [
                     import('./views/completedTraining/completedTraining.module').then((m) => m.CompletedTrainingModule)
             },
         ]
+    },
+    {
+        path: '404',
+        component: Page404Component,
+        data: {
+            title: 'Page 404'
+        }
+    },
+    {
+        path: '500',
+        component: Page500Component,
+        data: {
+            title: 'Page 500'
+        }
+    },
+    {
+        path: 'login',
+        component: LoginComponent,
+        data: {
+            title: 'Login Page'
+        }
     },
     {path: '**', redirectTo: 'dashboard'}
 ];
