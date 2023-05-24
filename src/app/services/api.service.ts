@@ -7,7 +7,7 @@ import {environment} from "../../environments/environment";
     providedIn: 'root'
 })
 export class ApiService {
-    private url = `${environment.apiUrl}protected`;
+    private url = `${environment.apiUrl}/protected`;
 
     constructor(private http: HttpClient) { }
 
