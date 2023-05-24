@@ -27,7 +27,7 @@ import {
     GridModule,
     HeaderModule,
     NavModule,
-    SidebarModule
+    SidebarModule, DropdownModule, AvatarModule
 } from '@coreui/angular-pro';
 
 import {IconModule, IconSetService} from '@coreui/icons-angular';
@@ -60,7 +60,9 @@ const APP_CONTAINERS = [
         SidebarModule,
         BadgeModule,
         HttpClientModule,
-        FormsModule
+        FormsModule,
+        DropdownModule,
+        AvatarModule
     ],
     providers: [
         {
