@@ -12,12 +12,47 @@
                 [gridOptions]="gridOptions"
                 (firstDataRendered)="onFirstDataRendered($event)"
         ></ag-grid-angular>
-        <form (ngSubmit)="addMember()">
-            <input type="text" [(ngModel)]="newMember.name" name="name" placeholder="Név" required>
-            <input type="text" [(ngModel)]="newMember.email" name="email" placeholder="Email" required>
-            <input type="text" [(ngModel)]="newMember.mobile" name="mobile" placeholder="Telefon">
-            <input type="text" [(ngModel)]="newMember.notes" name="notes" placeholder="Megjegyzés">
-            <button type="submit">Add Member</button>
-        </form>
+<!--        <form (ngSubmit)="addMember()">-->
+<!--            <input type="text" [(ngModel)]="newMember.name" name="name" placeholder="Név" required>-->
+<!--            <input type="text" [(ngModel)]="newMember.email" name="email" placeholder="Email" required>-->
+<!--            <input type="text" [(ngModel)]="newMember.mobile" name="mobile" placeholder="Telefon">-->
+<!--            <input type="text" [(ngModel)]="newMember.notes" name="notes" placeholder="Megjegyzés">-->
+<!--            <button type="submit">Add Member</button>-->
+<!--        </form>-->
+        `
+        <div class="card">
+            <div class="card-header">
+                <strong>Add Member</strong>
+            </div>
+            <div class="card-body">
+                <form class="form-horizontal" (ngSubmit)="addMember()">
+                    <div class="form-group row">
+                        <label class="col-md-2 col-form-label" for="name-input">Név</label>
+                        <div class="col-md-10">
+                            <input type="text" id="name-input" name="name" [(ngModel)]="newMember.name" class="form-control" placeholder="Név" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 col-form-label" for="email-input">Email</label>
+                        <div class="col-md-10">
+                            <input type="text" id="email-input" name="email" [(ngModel)]="newMember.email" class="form-control" placeholder="Email" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 col-form-label" for="mobile-input">Telefon</label>
+                        <div class="col-md-10">
+                            <input type="text" id="mobile-input" name="mobile" [(ngModel)]="newMember.mobile" class="form-control" placeholder="Telefon">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 col-form-label" for="notes-input">Megjegyzés</label>
+                        <div class="col-md-10">
+                            <input type="text" id="notes-input" name="notes" [(ngModel)]="newMember.notes" class="form-control" placeholder="Megjegyzés">
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i> Submit</button>
+                </form>
+            </div>
+        </div>
     </c-card-body>
 </c-card>
