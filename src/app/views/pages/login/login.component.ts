@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {AuthService} from "../../../services/auth.service";
 import {Router} from "@angular/router";
+import {LOCAL_STORAGE_KEY_ACCESS_TOKEN, LOCAL_STORAGE_KEY_USERNAME} from "../../../constants/localStorageKeys.constant";
 
 @Component({
     selector: 'app-login',
@@ -24,7 +25,8 @@ export class LoginComponent {
     onSubmit() {
         this.authService.login(this.username, this.password).subscribe(
             data => {
-                localStorage.setItem('access_token', data.token);
+                localStorage.setItem(LOCAL_STORAGE_KEY_ACCESS_TOKEN, data.token);
+                localStorage.setItem(LOCAL_STORAGE_KEY_USERNAME, this.username);
                 this.router.navigate(['/dashboard']);
             },
             err => {

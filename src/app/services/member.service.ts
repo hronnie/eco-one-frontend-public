@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {environment} from "../../environments/environment";
 import {Member} from "../interfaces/member.model";
 
@@ -8,9 +8,10 @@ import {Member} from "../interfaces/member.model";
     providedIn: 'root'
 })
 export class MemberService {
-    private apiUrl = `${environment.apiUrl}`;
+    private apiUrl = `${environment.apiUrl}/centers`;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+    }
 
     getAllMembers(center_code: string): Observable<Member[]> {
         return this.http.get<Member[]>(`${this.apiUrl}/${center_code}/members`);

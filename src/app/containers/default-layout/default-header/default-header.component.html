@@ -32,6 +32,7 @@
     </c-container></ng-container>
 
 <ng-template #userDropdown>
+    <div *ngIf="currentUser">{{currentUser}}</div>
     <c-dropdown alignment="end" variant="nav-item">
         <a href
            [caret]="false"
