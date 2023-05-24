@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from "../../services/api.service";
+import {Router} from "@angular/router";
 
 @Component({
     templateUrl: 'dashboard.component.html',
@@ -8,7 +9,8 @@ import {ApiService} from "../../services/api.service";
 export class DashboardComponent implements OnInit {
     protectedData: any;
 
-    constructor(private apiService: ApiService) { }
+    constructor(private apiService: ApiService,
+                private router: Router) { }
 
     ngOnInit(): void {
         this.apiService.getProtectedData().subscribe(
@@ -16,6 +18,10 @@ export class DashboardComponent implements OnInit {
                 this.protectedData = data;
             },
             err => {
+                if (err?.status === 401) {
+                    this.router.navigate(['/login']);
+                }
+
                 // Handle error here
                 console.log(err);
             }
