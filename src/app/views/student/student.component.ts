@@ -5,6 +5,8 @@ import {LOCAL_STORAGE_KEY_USERNAME} from "../../constants/localStorageKeys.const
 import {Member} from "../../interfaces/member.model";
 import {switchMap} from "rxjs";
 import { GridOptions } from 'ag-grid-community';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+
 
 @Component({
     templateUrl: 'student.component.html',
@@ -14,6 +16,7 @@ export class StudentComponent implements OnInit{
 
     allStudents: Member[] = [];
     rowData: Member[] = [];
+    newMemberForm: FormGroup | undefined;
 
     newMember: Partial<Member> = {};
 
@@ -22,6 +25,13 @@ export class StudentComponent implements OnInit{
     }
 
     ngOnInit(): void {
+        this.newMemberForm = new FormGroup({
+            'name': new FormControl(null, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
+            'email': new FormControl(null, [Validators.required, Validators.email, Validators.maxLength(100)]),
+            'mobile': new FormControl(null, [Validators.required, Validators.pattern('^[0-9+]+$')]),
+            'notes': new FormControl(null, [Validators.maxLength(200)]),
+        });
+
         const currentUser: string | null = localStorage.getItem(LOCAL_STORAGE_KEY_USERNAME);
         if (currentUser !== null) {
             this.centerService.getCenterCodeByUsername(currentUser).pipe(
@@ -37,6 +47,15 @@ export class StudentComponent implements OnInit{
                 }
             );
         }
+    }
+
+    onSubmit() {
+        if (this.newMemberForm === undefined) {
+            return;
+        }
+        // Add member to the rowData and reset form here
+        this.rowData.push(this.newMemberForm.value);
+        this.newMemberForm.reset();
     }
 
     addMember() {

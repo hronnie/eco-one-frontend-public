@@ -19,40 +19,52 @@
 <!--            <input type="text" [(ngModel)]="newMember.notes" name="notes" placeholder="Megjegyzés">-->
 <!--            <button type="submit">Add Member</button>-->
 <!--        </form>-->
-        `
         <div class="card">
             <div class="card-header">
                 <strong>Add Member</strong>
             </div>
             <div class="card-body">
-                <form class="form-horizontal" (ngSubmit)="addMember()">
-                    <div class="form-group row">
-                        <label class="col-md-2 col-form-label" for="name-input">Név</label>
-                        <div class="col-md-10">
-                            <input type="text" id="name-input" name="name" [(ngModel)]="newMember.name" class="form-control" placeholder="Név" required>
+                <form [formGroup]="newMemberForm" (ngSubmit)="onSubmit()">
+                    <!-- Name input field -->
+                    <div class="form-group">
+                        <label for="name">Név</label>
+                        <input type="text" id="name" formControlName="name" class="form-control" [ngClass]="{'is-invalid': newMemberForm?.controls?.name.invalid && newMemberForm?.controls?.name.touched}">
+                        <div class="invalid-feedback" *ngIf="newMemberForm?.controls?.name.invalid && newMemberForm?.controls?.name.touched">
+                            Please enter a valid name (5-100 characters).
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-md-2 col-form-label" for="email-input">Email</label>
-                        <div class="col-md-10">
-                            <input type="text" id="email-input" name="email" [(ngModel)]="newMember.email" class="form-control" placeholder="Email" required>
+
+                    <!-- Email input field -->
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" formControlName="email" class="form-control" [ngClass]="{'is-invalid': newMemberForm?.controls?.email.invalid && newMemberForm?.controls?.email.touched}">
+                        <div class="invalid-feedback" *ngIf="newMemberForm?.controls?.email.invalid && newMemberForm?.controls?.email.touched">
+                            Please enter a valid email (max 100 characters).
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-md-2 col-form-label" for="mobile-input">Telefon</label>
-                        <div class="col-md-10">
-                            <input type="text" id="mobile-input" name="mobile" [(ngModel)]="newMember.mobile" class="form-control" placeholder="Telefon">
+
+                    <!-- Mobile input field -->
+                    <div class="form-group">
+                        <label for="mobile">Telefon</label>
+                        <input type="text" id="mobile" formControlName="mobile" class="form-control" [ngClass]="{'is-invalid': newMemberForm?.controls?.mobile.invalid && newMemberForm?.controls?.mobile.touched}">
+                        <div class="invalid-feedback" *ngIf="newMemberForm?.controls?.mobile.invalid && newMemberForm?.controls?.mobile.touched">
+                            Please enter a valid mobile number (only numbers and '+' symbol allowed).
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-md-2 col-form-label" for="notes-input">Megjegyzés</label>
-                        <div class="col-md-10">
-                            <input type="text" id="notes-input" name="notes" [(ngModel)]="newMember.notes" class="form-control" placeholder="Megjegyzés">
+
+                    <!-- Notes input field -->
+                    <div class="form-group">
+                        <label for="notes">Megjegyzés</label>
+                        <input type="text" id="notes" formControlName="notes" class="form-control" [ngClass]="{'is-invalid': newMemberForm?.controls?.notes?.invalid && newMemberForm?.controls?.notes?.touched}">
+                        <div class="invalid-feedback" *ngIf="newMemberForm?.controls?.notes?.invalid && newMemberForm?.controls?.notes?.touched">
+                            Please enter a valid note (max 200 characters).
                         </div>
                     </div>
-                    <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i> Submit</button>
+
+                    <button type="submit" class="btn btn-primary" [disabled]="newMemberForm?.invalid">Submit</button>
                 </form>
             </div>
         </div>
+
     </c-card-body>
 </c-card>
