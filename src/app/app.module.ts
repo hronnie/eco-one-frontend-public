@@ -29,8 +29,9 @@ import {
 } from '@coreui/angular-pro';
 
 import {IconModule, IconSetService} from '@coreui/icons-angular';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
+import {JwtInterceptor} from "./interceptors/jwtInterceptor.interceptor";
 
 const APP_CONTAINERS = [
     DefaultAsideComponent,
@@ -64,7 +65,8 @@ const APP_CONTAINERS = [
             useClass: HashLocationStrategy
         },
         IconSetService,
-        Title
+        Title,
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
     ],
     bootstrap: [AppComponent]
 })

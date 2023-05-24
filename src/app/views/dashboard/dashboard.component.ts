@@ -18,11 +18,6 @@ export class DashboardComponent implements OnInit {
                 this.protectedData = data;
             },
             err => {
-                if (err?.status === 401) {
-                    this.router.navigate(['/login']);
-                }
-
-                // Handle error here
                 console.log(err);
             }
         );
