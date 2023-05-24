@@ -31,6 +31,7 @@
                     <button cButton class="px-4" color="primary" (click)="onSubmit()">
                       Bejelentkezés
                     </button>
+                    <div *ngIf="!isLoginValid" class="login-failed">Az email vagy jelszó nem !</div>
                   </c-col>
                   <c-col class="text-right" xs="6">
                   </c-col>

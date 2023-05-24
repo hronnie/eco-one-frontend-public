@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 export class LoginComponent {
     username: string = '';
     password: string = '';
+    isLoginValid = true;
 
     constructor(private authService: AuthService,
                 private router: Router) {
@@ -28,6 +29,7 @@ export class LoginComponent {
             },
             err => {
                 // Handle error
+                this.isLoginValid = false;
                 console.log(err);
             }
         );
