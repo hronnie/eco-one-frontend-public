@@ -3,7 +3,7 @@ import {MemberService} from "../../services/member.service";
 import {CenterService} from "../../services/center.service";
 import {LOCAL_STORAGE_KEY_CENTER_CODE, LOCAL_STORAGE_KEY_USERNAME} from "../../constants/localStorageKeys.constant";
 import {Member} from "../../interfaces/member.model";
-import { GridOptions } from 'ag-grid-community';
+import {CellValueChangedEvent, GridOptions} from 'ag-grid-community';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {DeleteButtonRendererComponent} from "../../components/aggrid/deleteButtonRenderer.component";
 
@@ -65,7 +65,7 @@ export class StudentComponent implements OnInit{
 
     columnDefs = [
         { field: 'name', headerName: 'Név', editable: true },
-        { field: 'email', headerName: 'Email', editable: true },
+        { field: 'email', headerName: 'Email', editable: false },
         { field: 'mobile', headerName: 'Telefon', editable: true },
         { field: 'notes', headerName: 'Megjegyzés', editable: true },
         {
@@ -105,7 +105,7 @@ export class StudentComponent implements OnInit{
             this.gridOptions.api.sizeColumnsToFit();
         },
         onCellValueChanged: (event) => {
-            // handle the cell value change
+            this.updateMember(event);
             console.log(event);
         },
         onFirstDataRendered(params) {
@@ -113,21 +113,33 @@ export class StudentComponent implements OnInit{
         },
     };
 
-    deleteMember(params: any) {
-        const idToDelete = params.data.id;
+    updateMember(event: CellValueChangedEvent) {
+        if (event.newValue !== event.oldValue) {
+            let updatedMember = {...event.data};
+            updatedMember[event.column?.getColId()] = event.newValue;
+            this.memberService.updateMember(updatedMember.center_code, updatedMember.email, updatedMember).subscribe(
+                response => {
+                    console.log("Member updated successfully");
+                },
+                error => {
+                    console.error("Error updating member: ", error);
+                }
+            );
+        }
+    }
 
-        // call your service method to delete the member on the server
-        this.memberService.deleteMember('amitabha', idToDelete).subscribe(
+    deleteMember(params: any) {
+        const email = params.data.email;
+        this.memberService.deleteMember('amitabha', email).subscribe(
             response => {
                 // on success, remove the member from the local array
-                this.rowData = this.rowData.filter(member => member?.email !== idToDelete);
+                this.rowData = this.rowData.filter(member => member?.email !== email);
             },
             error => {
                 console.error("Error deleting member: ", error);
             }
         );
     }
-
 
     onFirstDataRendered(params: any) {
         params.api.sizeColumnsToFit();
