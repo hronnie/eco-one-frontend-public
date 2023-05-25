@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {MemberService} from "../../services/member.service";
-import {CenterService} from "../../services/center.service";
 import {LOCAL_STORAGE_KEY_CENTER_CODE, LOCAL_STORAGE_KEY_USERNAME} from "../../constants/localStorageKeys.constant";
 import {Member} from "../../interfaces/member.model";
 import {CellValueChangedEvent, GridOptions} from 'ag-grid-community';
