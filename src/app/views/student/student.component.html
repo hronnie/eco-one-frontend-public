@@ -12,16 +12,9 @@
                 [gridOptions]="gridOptions"
                 (firstDataRendered)="onFirstDataRendered($event)"
         ></ag-grid-angular>
-<!--        <form (ngSubmit)="addMember()">-->
-<!--            <input type="text" [(ngModel)]="newMember.name" name="name" placeholder="Név" required>-->
-<!--            <input type="text" [(ngModel)]="newMember.email" name="email" placeholder="Email" required>-->
-<!--            <input type="text" [(ngModel)]="newMember.mobile" name="mobile" placeholder="Telefon">-->
-<!--            <input type="text" [(ngModel)]="newMember.notes" name="notes" placeholder="Megjegyzés">-->
-<!--            <button type="submit">Add Member</button>-->
-<!--        </form>-->
         <div class="card">
             <div class="card-header">
-                <strong>Add Member</strong>
+                <strong>Tanítvány hozzáadása</strong>
             </div>
             <div class="card-body">
                 <form [formGroup]="newMemberForm" (ngSubmit)="onSubmit()">

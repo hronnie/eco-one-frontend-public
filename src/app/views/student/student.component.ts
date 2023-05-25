@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {MemberService} from "../../services/member.service";
 import {CenterService} from "../../services/center.service";
-import {LOCAL_STORAGE_KEY_USERNAME} from "../../constants/localStorageKeys.constant";
+import {LOCAL_STORAGE_KEY_CENTER_CODE, LOCAL_STORAGE_KEY_USERNAME} from "../../constants/localStorageKeys.constant";
 import {Member} from "../../interfaces/member.model";
 import {switchMap} from "rxjs";
 import { GridOptions } from 'ag-grid-community';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {DeleteButtonRendererComponent} from "../../components/aggrid/deleteButtonRenderer.component";
 
 
 @Component({
@@ -19,9 +20,13 @@ export class StudentComponent implements OnInit{
     newMemberForm: FormGroup | undefined;
 
     newMember: Partial<Member> = {};
+    frameworkComponents: any;
 
     constructor(private memberService: MemberService,
                 private centerService: CenterService) {
+        this.frameworkComponents = {
+            buttonRenderer: DeleteButtonRendererComponent, // specify your ButtonRendererComponent
+        }
     }
 
     ngOnInit(): void {
@@ -33,10 +38,12 @@ export class StudentComponent implements OnInit{
         });
 
         const currentUser: string | null = localStorage.getItem(LOCAL_STORAGE_KEY_USERNAME);
+        const centerCode: string | null = localStorage.getItem(LOCAL_STORAGE_KEY_CENTER_CODE);
+        if (centerCode === null) {
+            return;
+        }
         if (currentUser !== null) {
-            this.centerService.getCenterCodeByUsername(currentUser).pipe(
-                switchMap(centerCode => this.memberService.getAllMembers(centerCode))
-            ).subscribe(
+            this.memberService.getAllMembers(centerCode).subscribe(
                 response => {
                     this.allStudents = response;
                     this.rowData = response;
@@ -53,28 +60,24 @@ export class StudentComponent implements OnInit{
         if (this.newMemberForm === undefined) {
             return;
         }
-        // Add member to the rowData and reset form here
         this.rowData.push(this.newMemberForm.value);
         this.newMemberForm.reset();
     }
-
-    addMember() {
-        const newMemberComplete: any = {
-            center_code: 'default', // Add logic to set this correctly
-            ...this.newMember
-        };
-        this.rowData.push(newMemberComplete);
-        // @ts-ignore
-        this.gridOptions.api.setRowData(this.rowData);
-        this.newMember = {};
-    }
-
 
     columnDefs = [
         { field: 'name', headerName: 'Név', editable: true },
         { field: 'email', headerName: 'Email', editable: true },
         { field: 'mobile', headerName: 'Telefon', editable: true },
         { field: 'notes', headerName: 'Megjegyzés', editable: true },
+        {
+            headerName: 'Delete',
+            field: 'delete',
+            cellRenderer: 'buttonRenderer',  // use the name (alias) you specified in frameworkComponents
+            cellRendererParams: {
+                onClick: this.deleteMember.bind(this),
+                label: 'Delete'
+            }
+        }
     ];
 
     defaultColDef = {
@@ -87,7 +90,6 @@ export class StudentComponent implements OnInit{
 
     // @ts-ignore
     gridOptions: GridOptions = {
-        // Enables excel-like filtering
         enableBrowserTooltips: true,
         suppressCellSelection: false,
         domLayout: 'autoHeight',
@@ -111,6 +113,20 @@ export class StudentComponent implements OnInit{
         },
     };
 
+    deleteMember(params: any) {
+        const idToDelete = params.data.id;
+
+        // call your service method to delete the member on the server
+        this.memberService.deleteMember('amitabha', idToDelete).subscribe(
+            response => {
+                // on success, remove the member from the local array
+                this.rowData = this.rowData.filter(member => member?.email !== idToDelete);
+            },
+            error => {
+                console.error("Error deleting member: ", error);
+            }
+        );
+    }
 
 
     onFirstDataRendered(params: any) {

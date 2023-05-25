@@ -21,6 +21,7 @@ import {
 import {IconModule} from '@coreui/icons-angular';
 import {StudentRoutingModule} from "./student-routing.module";
 import {StudentComponent} from "./student.component";
+import {DeleteButtonRendererComponent} from "../../components/aggrid/deleteButtonRenderer.component";
 
 
 @NgModule({
@@ -43,7 +44,10 @@ import {StudentComponent} from "./student.component";
         TableModule,
         AgGridModule,
     ],
-    declarations: [StudentComponent]
+    declarations: [
+        StudentComponent,
+        DeleteButtonRendererComponent
+    ]
 })
 export class StudentModule {
 }
