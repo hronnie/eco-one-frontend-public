@@ -1,7 +1,5 @@
-// button-renderer.component.ts
 import { Component } from "@angular/core";
 import { ICellRendererAngularComp } from "ag-grid-angular";
-import { ICellRendererParams, IAfterGuiAttachedParams } from "ag-grid-community";
 
 @Component({
     selector: 'button-renderer',
@@ -22,7 +20,6 @@ export class DeleteButtonRendererComponent implements ICellRendererAngularComp {
 
     onClick($event: any) {
         if (this.params.onClick instanceof Function) {
-            // Put anything into params you need to pass on to the parent component
             this.params.onClick(this.params);
         }
     }

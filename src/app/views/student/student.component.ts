@@ -18,7 +18,7 @@ export class StudentComponent implements OnInit{
     newMemberForm: FormGroup | undefined;
 
     frameworkComponents: any;
-    centerCode: string | null = localStorage.getItem(LOCAL_STORAGE_KEY_CENTER_CODE);
+    centerCode: string | null = null;
 
     isDeleteSuccessful = false;
     isDeleteFailed = false;
@@ -27,14 +27,14 @@ export class StudentComponent implements OnInit{
     isCreateSuccessful = false;
     isCreateFailed = false;
 
-    constructor(private memberService: MemberService,
-                private centerService: CenterService) {
+    constructor(private memberService: MemberService) {
         this.frameworkComponents = {
-            buttonRenderer: DeleteButtonRendererComponent, // specify your ButtonRendererComponent
+            buttonRenderer: DeleteButtonRendererComponent,
         }
     }
 
     ngOnInit(): void {
+        this.centerCode = localStorage.getItem(LOCAL_STORAGE_KEY_CENTER_CODE);
         this.newMemberForm = new FormGroup({
             'name': new FormControl(null, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
             'email': new FormControl(null, [Validators.required, Validators.email, Validators.maxLength(100)]),
@@ -46,21 +46,24 @@ export class StudentComponent implements OnInit{
 
     loadMembers(): void {
         const currentUser: string | null = localStorage.getItem(LOCAL_STORAGE_KEY_USERNAME);
-
         if (this.centerCode === null) {
             return;
         }
-        if (currentUser !== null) {
-            this.memberService.getAllMembers(this.centerCode).subscribe(
-                response => {
-                    this.rowData = response;
-                    console.table(response);
-                },
-                error => {
-                    console.log(error);
-                }
-            );
+
+        if (currentUser === null) {
+            return;
         }
+
+        this.memberService.getAllMembers(this.centerCode).subscribe({
+            next: (response) => {
+                this.rowData = response;
+                console.table(response);
+            },
+            error: (error) => {
+                console.log(error);
+            }
+        });
+
     }
 
     columnDefs = [
@@ -123,18 +126,18 @@ export class StudentComponent implements OnInit{
         if (this.centerCode === null) {
             this.centerCode = '';
         }
-        this.memberService.createMember(this.centerCode, memberData)
-            .subscribe(
-                response => {
-                    this.isCreateSuccessful = true;
-                    this.loadMembers();
-                    console.log('Member created successfully', response);
-                },
-                error => {
-                    this.isCreateFailed = true;
-                    console.error('There was an error while creating the member', error);
-                }
-            );
+        this.memberService.createMember(this.centerCode, memberData).subscribe({
+            next: (response) => {
+                this.isCreateSuccessful = true;
+                this.loadMembers();
+                console.log('Member created successfully', response);
+            },
+            error: (error) => {
+                this.isCreateFailed = true;
+                console.error('There was an error while creating the member', error);
+            }
+        });
+
 
 
         this.rowData.push(this.newMemberForm.value);
@@ -147,16 +150,17 @@ export class StudentComponent implements OnInit{
         if (event.newValue !== event.oldValue) {
             let updatedMember = {...event.data};
             updatedMember[event.column?.getColId()] = event.newValue;
-            this.memberService.updateMember(updatedMember.center_code, updatedMember.email, updatedMember).subscribe(
-                response => {
+            this.memberService.updateMember(updatedMember.center_code, updatedMember.email, updatedMember).subscribe({
+                next: (response) => {
                     this.isEditSuccessful = true;
                     console.log("Member updated successfully");
                 },
-                error => {
+                error: (error) => {
                     this.isEditFailed = true;
                     console.error("Error updating member: ", error);
                 }
-            );
+            });
+
         }
     }
 
@@ -164,16 +168,21 @@ export class StudentComponent implements OnInit{
         this.isDeleteSuccessful = false;
         this.isDeleteFailed = false;
         const email = params.data.email;
-        this.memberService.deleteMember('amitabha', email).subscribe(
-            response => {
+        if (this.centerCode === null) {
+            this.isDeleteFailed = true;
+            return;
+        }
+        this.memberService.deleteMember(this.centerCode, email).subscribe({
+            next: (response) => {
                 this.isDeleteSuccessful = true;
                 this.rowData = this.rowData.filter(member => member?.email !== email);
             },
-            error => {
+            error: (error) => {
                 this.isDeleteFailed = true;
                 console.error("Error deleting member: ", error);
             }
-        );
+        });
+
     }
 
     onFirstDataRendered(params: any) {

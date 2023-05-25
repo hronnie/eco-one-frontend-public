@@ -29,26 +29,25 @@ export class LoginComponent {
     }
 
     onSubmit() {
-        this.authService.login(this.username, this.password).subscribe(
-            data => {
+        this.authService.login(this.username, this.password).subscribe({
+            next: (data) => {
                 localStorage.setItem(LOCAL_STORAGE_KEY_ACCESS_TOKEN, data.token);
                 localStorage.setItem(LOCAL_STORAGE_KEY_USERNAME, this.username);
-                this.centerService.getCenterByUsername(this.username).subscribe(
-                    center => {
+                this.centerService.getCenterByUsername(this.username).subscribe({
+                    next: (center) => {
                         localStorage.setItem(LOCAL_STORAGE_KEY_CENTER_CODE, center?.code);
                         localStorage.setItem(LOCAL_STORAGE_KEY_CENTER_DESC, <string>center?.description);
                     },
-                    error => {
+                    error: (error) => {
                         console.log(error);
                     }
-                )
+                });
                 this.router.navigate(['/dashboard']);
             },
-            err => {
-                // Handle error
+            error: (err) => {
                 this.isLoginValid = false;
                 console.log(err);
             }
-        );
+        });
     }
 }

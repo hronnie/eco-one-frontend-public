@@ -13,14 +13,15 @@ export class DashboardComponent implements OnInit {
                 private router: Router) { }
 
     ngOnInit(): void {
-        this.apiService.getProtectedData().subscribe(
-            data => {
+        this.apiService.getProtectedData().subscribe({
+            next: (data) => {
                 this.protectedData = data;
             },
-            err => {
+            error: (err) => {
                 console.log(err);
             }
-        );
+        });
+
     }
 
 }
