@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 
 
 import {
+    AlertModule,
     AvatarModule,
     ButtonGroupModule,
     ButtonModule,
@@ -43,6 +44,7 @@ import {DeleteButtonRendererComponent} from "../../components/aggrid/deleteButto
         AvatarModule,
         TableModule,
         AgGridModule,
+        AlertModule,
     ],
     declarations: [
         StudentComponent,

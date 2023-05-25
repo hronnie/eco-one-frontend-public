@@ -1,6 +1,50 @@
 <c-card>
     <c-card-header>
         <strong>Tanítványok szerkesztése</strong>
+        <div class="alert-area">
+            <c-alert [(visible)]="isDeleteFailed"
+                     [dismissible]="true"
+                     color="danger"
+                     fade
+                     *ngIf="isDeleteFailed">
+                    <strong>Tanítvány törlése nem sikerült ismeretlen hiba miatt!</strong>
+            </c-alert>
+            <c-alert [(visible)]="isEditFailed"
+                     [dismissible]="true"
+                     color="danger"
+                     fade
+                     *ngIf="isEditFailed">
+                    <strong>Tanítvány szerkesztése nem sikerült ismeretlen hiba miatt!</strong>
+            </c-alert>
+            <c-alert [(visible)]="isCreateFailed"
+                     [dismissible]="true"
+                     color="danger"
+                     fade
+                     *ngIf="isCreateFailed">
+                    <strong>Tanítvány létrehozása nem sikerült ismeretlen hiba miatt!</strong>
+            </c-alert>
+            <c-alert [(visible)]="isDeleteSuccessful"
+                     [dismissible]="true"
+                     color="success"
+                     fade
+                     *ngIf="isDeleteSuccessful">
+                    <strong>Tanítvány törlése sikeres volt!</strong>
+            </c-alert>
+            <c-alert [(visible)]="isEditSuccessful"
+                     [dismissible]="true"
+                     color="success"
+                     fade
+                     *ngIf="isEditSuccessful">
+                    <strong>Tanítvány szerkesztése sikeres volt!</strong>
+            </c-alert>
+            <c-alert [(visible)]="isCreateSuccessful"
+                     [dismissible]="true"
+                     color="success"
+                     fade
+                     *ngIf="isCreateSuccessful">
+                    <strong>Tanítvány létrehozása sikeres volt!</strong>
+            </c-alert>
+        </div>
     </c-card-header>
     <c-card-body>
         <ag-grid-angular
@@ -16,9 +60,10 @@
         <div class="card">
             <div class="card-header">
                 <strong>Tanítvány hozzáadása</strong>
+
             </div>
             <div class="card-body">
-                <form [formGroup]="newMemberForm" (ngSubmit)="addNewMember()">
+                <form [formGroup]="newMemberForm" (ngSubmit)="createMember()">
                     <!-- Name input field -->
                     <div class="form-group">
                         <label for="name">Név</label>

@@ -14,13 +14,18 @@ import {DeleteButtonRendererComponent} from "../../components/aggrid/deleteButto
 })
 export class StudentComponent implements OnInit{
 
-    allStudents: Member[] = [];
     rowData: Member[] = [];
     newMemberForm: FormGroup | undefined;
 
-    newMember: Partial<Member> = {};
     frameworkComponents: any;
     centerCode: string | null = localStorage.getItem(LOCAL_STORAGE_KEY_CENTER_CODE);
+
+    isDeleteSuccessful = false;
+    isDeleteFailed = false;
+    isEditSuccessful = false;
+    isEditFailed = false;
+    isCreateSuccessful = false;
+    isCreateFailed = false;
 
     constructor(private memberService: MemberService,
                 private centerService: CenterService) {
@@ -36,7 +41,10 @@ export class StudentComponent implements OnInit{
             'mobile': new FormControl(null, [Validators.required, Validators.pattern('^[0-9+]+$')]),
             'notes': new FormControl(null, [Validators.maxLength(200)]),
         });
+        this.loadMembers();
+    }
 
+    loadMembers(): void {
         const currentUser: string | null = localStorage.getItem(LOCAL_STORAGE_KEY_USERNAME);
 
         if (this.centerCode === null) {
@@ -45,7 +53,6 @@ export class StudentComponent implements OnInit{
         if (currentUser !== null) {
             this.memberService.getAllMembers(this.centerCode).subscribe(
                 response => {
-                    this.allStudents = response;
                     this.rowData = response;
                     console.table(response);
                 },
@@ -54,29 +61,6 @@ export class StudentComponent implements OnInit{
                 }
             );
         }
-    }
-
-    addNewMember() {
-        if (this.newMemberForm === undefined) {
-            return;
-        }
-        const memberData: Member = this.newMemberForm.value;
-        if (this.centerCode === null) {
-            this.centerCode = '';
-        }
-        this.memberService.createMember(this.centerCode, memberData)
-            .subscribe(
-                response => {
-                    console.log('Member created successfully', response);
-                },
-                error => {
-                    console.error('There was an error while creating the member', error);
-                }
-            );
-
-
-        this.rowData.push(this.newMemberForm.value);
-        this.newMemberForm.reset();
     }
 
     columnDefs = [
@@ -129,15 +113,47 @@ export class StudentComponent implements OnInit{
         },
     };
 
+    createMember() {
+        this.isCreateSuccessful = false;
+        this.isCreateFailed = false;
+        if (this.newMemberForm === undefined) {
+            return;
+        }
+        const memberData: Member = this.newMemberForm.value;
+        if (this.centerCode === null) {
+            this.centerCode = '';
+        }
+        this.memberService.createMember(this.centerCode, memberData)
+            .subscribe(
+                response => {
+                    this.isCreateSuccessful = true;
+                    this.loadMembers();
+                    console.log('Member created successfully', response);
+                },
+                error => {
+                    this.isCreateFailed = true;
+                    console.error('There was an error while creating the member', error);
+                }
+            );
+
+
+        this.rowData.push(this.newMemberForm.value);
+        this.newMemberForm.reset();
+    }
+
     updateMember(event: CellValueChangedEvent) {
+        this.isEditSuccessful = false;
+        this.isEditFailed = false;
         if (event.newValue !== event.oldValue) {
             let updatedMember = {...event.data};
             updatedMember[event.column?.getColId()] = event.newValue;
             this.memberService.updateMember(updatedMember.center_code, updatedMember.email, updatedMember).subscribe(
                 response => {
+                    this.isEditSuccessful = true;
                     console.log("Member updated successfully");
                 },
                 error => {
+                    this.isEditFailed = true;
                     console.error("Error updating member: ", error);
                 }
             );
@@ -145,13 +161,16 @@ export class StudentComponent implements OnInit{
     }
 
     deleteMember(params: any) {
+        this.isDeleteSuccessful = false;
+        this.isDeleteFailed = false;
         const email = params.data.email;
         this.memberService.deleteMember('amitabha', email).subscribe(
             response => {
-                // on success, remove the member from the local array
+                this.isDeleteSuccessful = true;
                 this.rowData = this.rowData.filter(member => member?.email !== email);
             },
             error => {
+                this.isDeleteFailed = true;
                 console.error("Error deleting member: ", error);
             }
         );
