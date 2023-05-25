@@ -5,7 +5,7 @@ import { ICellRendererParams, IAfterGuiAttachedParams } from "ag-grid-community"
 
 @Component({
     selector: 'button-renderer',
-    template: `<button type="button" (click)="onClick($event)">{{label}}</button>`
+    template: `<button cButton color="danger" (click)="onClick($event)">Törlés</button>`
 })
 export class DeleteButtonRendererComponent implements ICellRendererAngularComp {
     params: any;

@@ -3,7 +3,6 @@ import {MemberService} from "../../services/member.service";
 import {CenterService} from "../../services/center.service";
 import {LOCAL_STORAGE_KEY_CENTER_CODE, LOCAL_STORAGE_KEY_USERNAME} from "../../constants/localStorageKeys.constant";
 import {Member} from "../../interfaces/member.model";
-import {switchMap} from "rxjs";
 import { GridOptions } from 'ag-grid-community';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {DeleteButtonRendererComponent} from "../../components/aggrid/deleteButtonRenderer.component";
@@ -56,7 +55,7 @@ export class StudentComponent implements OnInit{
         }
     }
 
-    onSubmit() {
+    addNewMember() {
         if (this.newMemberForm === undefined) {
             return;
         }
@@ -70,13 +69,14 @@ export class StudentComponent implements OnInit{
         { field: 'mobile', headerName: 'Telefon', editable: true },
         { field: 'notes', headerName: 'Megjegyzés', editable: true },
         {
-            headerName: 'Delete',
+            headerName: '',
             field: 'delete',
             cellRenderer: 'buttonRenderer',  // use the name (alias) you specified in frameworkComponents
             cellRendererParams: {
                 onClick: this.deleteMember.bind(this),
                 label: 'Delete'
-            }
+            },
+            maxWidth: 120
         }
     ];
 

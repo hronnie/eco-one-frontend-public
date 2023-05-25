@@ -11,19 +11,20 @@
                 [defaultColDef]="defaultColDef"
                 [gridOptions]="gridOptions"
                 (firstDataRendered)="onFirstDataRendered($event)"
+                [frameworkComponents]="frameworkComponents"
         ></ag-grid-angular>
         <div class="card">
             <div class="card-header">
                 <strong>Tanítvány hozzáadása</strong>
             </div>
             <div class="card-body">
-                <form [formGroup]="newMemberForm" (ngSubmit)="onSubmit()">
+                <form [formGroup]="newMemberForm" (ngSubmit)="addNewMember()">
                     <!-- Name input field -->
                     <div class="form-group">
                         <label for="name">Név</label>
                         <input type="text" id="name" formControlName="name" class="form-control" [ngClass]="{'is-invalid': newMemberForm?.controls?.name.invalid && newMemberForm?.controls?.name.touched}">
                         <div class="invalid-feedback" *ngIf="newMemberForm?.controls?.name.invalid && newMemberForm?.controls?.name.touched">
-                            Please enter a valid name (5-100 characters).
+                            Név kitöltése kötelező. (minimum 5, maximum 100 karakter)
                         </div>
                     </div>
 
@@ -32,7 +33,7 @@
                         <label for="email">Email</label>
                         <input type="email" id="email" formControlName="email" class="form-control" [ngClass]="{'is-invalid': newMemberForm?.controls?.email.invalid && newMemberForm?.controls?.email.touched}">
                         <div class="invalid-feedback" *ngIf="newMemberForm?.controls?.email.invalid && newMemberForm?.controls?.email.touched">
-                            Please enter a valid email (max 100 characters).
+                            Email kitöltése kötelező. (minimum 5, maximum 100 karakter)
                         </div>
                     </div>
 
@@ -42,6 +43,7 @@
                         <input type="text" id="mobile" formControlName="mobile" class="form-control" [ngClass]="{'is-invalid': newMemberForm?.controls?.mobile.invalid && newMemberForm?.controls?.mobile.touched}">
                         <div class="invalid-feedback" *ngIf="newMemberForm?.controls?.mobile.invalid && newMemberForm?.controls?.mobile.touched">
                             Please enter a valid mobile number (only numbers and '+' symbol allowed).
+                            Telefon kitöltése kötelező, csak számok és + jel az elfogadott.
                         </div>
                     </div>
 
@@ -50,11 +52,11 @@
                         <label for="notes">Megjegyzés</label>
                         <input type="text" id="notes" formControlName="notes" class="form-control" [ngClass]="{'is-invalid': newMemberForm?.controls?.notes?.invalid && newMemberForm?.controls?.notes?.touched}">
                         <div class="invalid-feedback" *ngIf="newMemberForm?.controls?.notes?.invalid && newMemberForm?.controls?.notes?.touched">
-                            Please enter a valid note (max 200 characters).
+                            Maximum 200 karakter lehet.
                         </div>
                     </div>
-
-                    <button type="submit" class="btn btn-primary" [disabled]="newMemberForm?.invalid">Submit</button>
+                    <button type="submit" cButton color="primary" class="add-member-button">Hozzáadás</button>
+<!--                    <button type="submit" class="btn btn-primary" [disabled]="newMemberForm?.invalid" class="add-member-button">Hozzáadás</button>-->
                 </form>
             </div>
         </div>
