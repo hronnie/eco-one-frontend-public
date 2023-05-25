@@ -20,6 +20,7 @@ export class StudentComponent implements OnInit{
 
     newMember: Partial<Member> = {};
     frameworkComponents: any;
+    centerCode: string | null = localStorage.getItem(LOCAL_STORAGE_KEY_CENTER_CODE);
 
     constructor(private memberService: MemberService,
                 private centerService: CenterService) {
@@ -37,12 +38,12 @@ export class StudentComponent implements OnInit{
         });
 
         const currentUser: string | null = localStorage.getItem(LOCAL_STORAGE_KEY_USERNAME);
-        const centerCode: string | null = localStorage.getItem(LOCAL_STORAGE_KEY_CENTER_CODE);
-        if (centerCode === null) {
+
+        if (this.centerCode === null) {
             return;
         }
         if (currentUser !== null) {
-            this.memberService.getAllMembers(centerCode).subscribe(
+            this.memberService.getAllMembers(this.centerCode).subscribe(
                 response => {
                     this.allStudents = response;
                     this.rowData = response;
@@ -59,6 +60,21 @@ export class StudentComponent implements OnInit{
         if (this.newMemberForm === undefined) {
             return;
         }
+        const memberData: Member = this.newMemberForm.value;
+        if (this.centerCode === null) {
+            this.centerCode = '';
+        }
+        this.memberService.createMember(this.centerCode, memberData)
+            .subscribe(
+                response => {
+                    console.log('Member created successfully', response);
+                },
+                error => {
+                    console.error('There was an error while creating the member', error);
+                }
+            );
+
+
         this.rowData.push(this.newMemberForm.value);
         this.newMemberForm.reset();
     }
