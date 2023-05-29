@@ -17,7 +17,11 @@ import {
 
 import {IconModule} from '@coreui/icons-angular';
 import {CompletedTrainingRoutingModule} from "./completedTraining-routing.module";
-import {CompletedTrainingcomponent} from "./completedTrainingcomponent";
+import {CompletedTrainingcomponent} from "./completedTraining.component";
+import {AgGridModule} from "@ag-grid-community/angular";
+import {TrainingService} from "../../services/training.service";
+import {MemberService} from "../../services/member.service";
+import {DeleteButtonRendererComponent} from "../../components/aggrid/deleteButtonRenderer.component";
 
 
 @NgModule({
@@ -36,9 +40,15 @@ import {CompletedTrainingcomponent} from "./completedTrainingcomponent";
         ButtonModule,
         ButtonGroupModule,
         AvatarModule,
-        TableModule
+        TableModule,
+        AgGridModule
     ],
-    declarations: [CompletedTrainingcomponent]
+    declarations: [CompletedTrainingcomponent],
+    providers: [
+        TrainingService,
+        MemberService,
+        DeleteButtonRendererComponent
+    ]
 })
 export class CompletedTrainingModule {
 }

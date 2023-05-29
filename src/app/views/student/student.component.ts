@@ -13,12 +13,8 @@ import {DeleteButtonRendererComponent} from "../../components/aggrid/deleteButto
 })
 export class StudentComponent implements OnInit{
 
-    rowData: Member[] = [];
     newMemberForm: FormGroup | undefined;
-
-    frameworkComponents: any;
     centerCode: string | null = null;
-
     isDeleteSuccessful = false;
     isDeleteFailed = false;
     isEditSuccessful = false;
@@ -26,45 +22,9 @@ export class StudentComponent implements OnInit{
     isCreateSuccessful = false;
     isCreateFailed = false;
 
-    constructor(private memberService: MemberService) {
-        this.frameworkComponents = {
-            buttonRenderer: DeleteButtonRendererComponent,
-        }
-    }
-
-    ngOnInit(): void {
-        this.centerCode = localStorage.getItem(LOCAL_STORAGE_KEY_CENTER_CODE);
-        this.newMemberForm = new FormGroup({
-            'name': new FormControl(null, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
-            'email': new FormControl(null, [Validators.required, Validators.email, Validators.maxLength(100)]),
-            'mobile': new FormControl(null, [Validators.required, Validators.pattern('^[0-9+]+$')]),
-            'notes': new FormControl(null, [Validators.maxLength(200)]),
-        });
-        this.loadMembers();
-    }
-
-    loadMembers(): void {
-        const currentUser: string | null = localStorage.getItem(LOCAL_STORAGE_KEY_USERNAME);
-        if (this.centerCode === null) {
-            return;
-        }
-
-        if (currentUser === null) {
-            return;
-        }
-
-        this.memberService.getAllMembers(this.centerCode).subscribe({
-            next: (response) => {
-                this.rowData = response;
-                console.table(response);
-            },
-            error: (error) => {
-                console.log(error);
-            }
-        });
-
-    }
-
+    // AG GRID START
+    frameworkComponents: any;
+    rowData: Member[] = [];
     columnDefs = [
         { field: 'name', headerName: 'Név', editable: true },
         { field: 'email', headerName: 'Email', editable: false },
@@ -73,7 +33,7 @@ export class StudentComponent implements OnInit{
         {
             headerName: '',
             field: 'delete',
-            cellRenderer: 'buttonRenderer',  // use the name (alias) you specified in frameworkComponents
+            cellRenderer: 'buttonRenderer',
             cellRendererParams: {
                 onClick: this.deleteMember.bind(this),
                 label: 'Delete'
@@ -114,6 +74,45 @@ export class StudentComponent implements OnInit{
             params.api.sizeColumnsToFit();
         },
     };
+    // AG GRID END
+
+    constructor(private memberService: MemberService) {
+        this.frameworkComponents = {
+            buttonRenderer: DeleteButtonRendererComponent,
+        }
+    }
+
+    ngOnInit(): void {
+        this.centerCode = localStorage.getItem(LOCAL_STORAGE_KEY_CENTER_CODE);
+        this.newMemberForm = new FormGroup({
+            'name': new FormControl(null, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
+            'email': new FormControl(null, [Validators.required, Validators.email, Validators.maxLength(100)]),
+            'mobile': new FormControl(null, [Validators.required, Validators.pattern('^[0-9+]+$')]),
+            'notes': new FormControl(null, [Validators.maxLength(200)]),
+        });
+        this.loadMembers();
+    }
+
+    loadMembers(): void {
+        const currentUser: string | null = localStorage.getItem(LOCAL_STORAGE_KEY_USERNAME);
+        if (this.centerCode === null) {
+            return;
+        }
+
+        if (currentUser === null) {
+            return;
+        }
+
+        this.memberService.getAllMembers(this.centerCode).subscribe({
+            next: (response) => {
+                this.rowData = response;
+                console.table(response);
+            },
+            error: (error) => {
+                console.log(error);
+            }
+        });
+    }
 
     createMember() {
         this.isCreateSuccessful = false;
@@ -137,8 +136,6 @@ export class StudentComponent implements OnInit{
             }
         });
 
-
-
         this.rowData.push(this.newMemberForm.value);
         this.newMemberForm.reset();
     }
@@ -159,7 +156,6 @@ export class StudentComponent implements OnInit{
                     console.error("Error updating member: ", error);
                 }
             });
-
         }
     }
 

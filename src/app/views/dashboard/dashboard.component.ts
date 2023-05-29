@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ApiService} from "../../services/api.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -9,19 +8,9 @@ import {Router} from "@angular/router";
 export class DashboardComponent implements OnInit {
     protectedData: any;
 
-    constructor(private apiService: ApiService,
-                private router: Router) { }
+    constructor(private router: Router) { }
 
     ngOnInit(): void {
-        this.apiService.getProtectedData().subscribe({
-            next: (data) => {
-                this.protectedData = data;
-            },
-            error: (err) => {
-                console.log(err);
-            }
-        });
-
     }
 
 }

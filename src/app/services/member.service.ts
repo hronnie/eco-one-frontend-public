@@ -17,6 +17,13 @@ export class MemberService {
         return this.http.get<Member[]>(`${this.apiUrl}/${center_code}/members`);
     }
 
+    searchMembers(center_code: string | null, search: string): Observable<Member[]> {
+        if (center_code === null) {
+            center_code = '';
+        }
+        return this.http.get<Member[]>(`${this.apiUrl}/${center_code}/members/${search}/search`);
+    }
+
     getMemberByEmail(center_code: string, email: string): Observable<Member> {
         return this.http.get<Member>(`${this.apiUrl}/${center_code}/members/${email}`);
     }

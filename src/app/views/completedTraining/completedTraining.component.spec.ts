@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CardBodyComponent, CardComponent, CardHeaderComponent} from '@coreui/angular-pro';
-import {CompletedTrainingcomponent} from "./completedTrainingcomponent";
+import {CompletedTrainingcomponent} from "./completedTraining.component";
 
 describe('CompletedTrainingComponent', () => {
     let component: CompletedTrainingcomponent;

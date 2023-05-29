@@ -15,6 +15,8 @@
   },
   "private": true,
   "dependencies": {
+    "@ag-grid-community/all-modules": "^27.3.0",
+    "@ag-grid-community/angular": "^29.3.5",
     "@angular/animations": "^14.2.4",
     "@angular/cdk": "^14.2.3",
     "@angular/common": "^14.2.4",
@@ -25,6 +27,7 @@
     "@angular/platform-browser": "^14.2.4",
     "@angular/platform-browser-dynamic": "^14.2.4",
     "@angular/router": "^14.2.4",
+    "@coreui/angular": "^4.5.0",
     "@coreui/angular-pro": "~4.2.4",
     "@coreui/coreui-pro": "~4.3.4",
     "@coreui/icons": "^2.1.0",
