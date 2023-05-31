@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {CompletedTrainingcomponent} from "./completedTraining.component";
+import {CompletedTrainingComponent} from "./completed-training.component";
 
 
 const routes: Routes = [
     {
         path: '',
-        component: CompletedTrainingcomponent,
+        component: CompletedTrainingComponent,
         data: {
             title: $localize`Elvégzett tanfolyamok`
         }

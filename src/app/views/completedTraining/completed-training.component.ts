@@ -15,10 +15,10 @@ import {CellValueChangedEvent, GridOptions} from "ag-grid-community";
 import {DeleteButtonRendererComponent} from "../../components/aggrid/deleteButtonRenderer.component";
 
 @Component({
-    templateUrl: 'completedTraining.component.html',
+    templateUrl: 'completed-training.component.html',
     styleUrls: ['completedTraining.component.scss']
 })
-export class CompletedTrainingcomponent implements OnInit {
+export class CompletedTrainingComponent implements OnInit {
     searchControl = new FormControl();
     public modules: any[] = [AllCommunityModules];
     // modules = AllCommunityModules;

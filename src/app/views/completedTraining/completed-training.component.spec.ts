@@ -1,21 +1,21 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CardBodyComponent, CardComponent, CardHeaderComponent} from '@coreui/angular-pro';
-import {CompletedTrainingcomponent} from "./completedTraining.component";
+import {CompletedTrainingComponent} from "./completed-training.component";
 
 describe('CompletedTrainingComponent', () => {
-    let component: CompletedTrainingcomponent;
-    let fixture: ComponentFixture<CompletedTrainingcomponent>;
+    let component: CompletedTrainingComponent;
+    let fixture: ComponentFixture<CompletedTrainingComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [CompletedTrainingcomponent, CardComponent, CardHeaderComponent, CardBodyComponent]
+            declarations: [CompletedTrainingComponent, CardComponent, CardHeaderComponent, CardBodyComponent]
         })
             .compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(CompletedTrainingcomponent);
+        fixture = TestBed.createComponent(CompletedTrainingComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

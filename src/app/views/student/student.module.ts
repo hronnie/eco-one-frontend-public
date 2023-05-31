@@ -22,7 +22,7 @@ import {
 import {IconModule} from '@coreui/icons-angular';
 import {StudentRoutingModule} from "./student-routing.module";
 import {StudentComponent} from "./student.component";
-import {DeleteButtonRendererComponent} from "../../components/aggrid/deleteButtonRenderer.component";
+import {SharedModule} from "../../shared/shared.module";
 
 
 @NgModule({
@@ -45,10 +45,10 @@ import {DeleteButtonRendererComponent} from "../../components/aggrid/deleteButto
         TableModule,
         AgGridModule,
         AlertModule,
+        SharedModule
     ],
     declarations: [
         StudentComponent,
-        DeleteButtonRendererComponent
     ]
 })
 export class StudentModule {
