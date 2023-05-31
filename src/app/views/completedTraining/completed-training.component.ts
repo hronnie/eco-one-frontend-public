@@ -28,6 +28,9 @@ export class CompletedTrainingComponent implements OnInit {
     trainings: Training[] = [];
     isMemberSelected = false;
     selectedMemberName = '';
+    selectedMemberEmail = '';
+    selectedTraining: string = '';
+    selectedDate: string = '';
 
     // AG GRID START
     frameworkComponents: any;
@@ -123,17 +126,39 @@ export class CompletedTrainingComponent implements OnInit {
         });
     }
 
+    addTraining() {
+        if (this.selectedTraining && this.selectedDate && this.centerCode) {
+            const formattedDate = this.datePipe.transform(this.selectedDate, 'yyyy-MM-dd');
+            if (!formattedDate) {
+                return;
+            }
+            this.completedTrainingService.addTraining(this.centerCode, this.selectedTraining, this.selectedMemberEmail, formattedDate).subscribe(
+                response => {
+                    this.loadCompletedTrainings();
+                }
+            );
+        } else {
+            alert('Please select a training and a date.');
+        }
+    }
+
+
     deleteCompletedTraining() {
 
     }
 
     selectMember(member: Member) {
         this.isMemberSelected = true;
+        this.selectedMemberName = member.name;
+        this.selectedMemberEmail = member.email;
+        this.loadCompletedTrainings();
+    }
+
+    loadCompletedTrainings(): void {
         if (this.centerCode === null) {
             return;
         }
-        this.selectedMemberName = member.name;
-        this.completedTrainingService.getCompletedTraining(this.centerCode, member.email)
+        this.completedTrainingService.getCompletedTraining(this.centerCode, this.selectedMemberEmail)
             .subscribe(completedTrainings => {
 
                 this.rowData = this.converToView(completedTrainings);
@@ -146,7 +171,6 @@ export class CompletedTrainingComponent implements OnInit {
         this.trainings.forEach(training => {
             trainingMap[training.code] = training;
         });
-        // const training = trainingMap[completedTraining.code];
 
         return completedTrainings.map(completedTraining => {
             const training = trainingMap[completedTraining.code];

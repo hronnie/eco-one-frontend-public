@@ -16,4 +16,14 @@ export class CompletedTrainingService {
     getCompletedTraining(center_code: string, email: string): Observable<CompletedTraining[]> {
         return this.http.get<CompletedTraining[]>(`${this.apiUrl}/${center_code}/completedTrainings/${email}/byemail`);
     }
+
+    addTraining(centerCode: string, trainingCode: string, email: string, completionDate: string): Observable<any> {
+        const url = `${this.apiUrl}/${centerCode}/completedTrainings`;
+        const completedTraining = {
+            code: trainingCode,
+            email: email,
+            completionDate: completionDate
+        };
+        return this.http.post(url, completedTraining);
+    }
 }
