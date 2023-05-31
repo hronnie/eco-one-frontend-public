@@ -16,35 +16,36 @@ import {DeleteButtonRendererComponent} from "../../components/aggrid/deleteButto
 
 @Component({
     templateUrl: 'completed-training.component.html',
-    styleUrls: ['completedTraining.component.scss']
+    styleUrls: ['completed-training.component.scss']
 })
 export class CompletedTrainingComponent implements OnInit {
     searchControl = new FormControl();
     public modules: any[] = [AllCommunityModules];
-    // modules = AllCommunityModules;
     centerCode: string | null = null;
     members: Member[] = [];
     trainings: Training[] = [];
+    isMemberSelected = false;
+    selectedMemberName = '';
 
     // AG GRID START
     frameworkComponents: any;
     rowData: CompletedTrainingView[] = [];
-    // public gridApi: any;
-    // public gridColumnApi: any;
+    public gridApi: any;
+    public gridColumnApi: any;
     columnDefs = [
-        // { field: 'trainingName', headerName: 'Tanfolyam', editable: false },
+        { field: 'trainingName', headerName: 'Tanfolyam', editable: false },
         { field: 'email', headerName: 'Email', editable: false },
-        // { field: 'completionDate', headerName: 'Ideje', editable: true },
-        // {
-        //     headerName: '',
-        //     field: 'delete',
-        //     cellRenderer: 'buttonRenderer',
-        //     cellRendererParams: {
-        //         onClick: this.deleteCompletedTraining.bind(this),
-        //         label: 'Delete'
-        //     },
-        //     maxWidth: 120
-        // }
+        { field: 'completionDate', headerName: 'Ideje', editable: true },
+        {
+            headerName: '',
+            field: 'delete',
+            cellRenderer: 'buttonRenderer',
+            cellRendererParams: {
+                onClick: this.deleteCompletedTraining.bind(this),
+                label: 'Delete'
+            },
+            maxWidth: 120
+        }
     ];
 
     defaultColDef = {
@@ -105,6 +106,7 @@ export class CompletedTrainingComponent implements OnInit {
             debounceTime(300),
             switchMap((searchTerm) => this.memberService.searchMembers(this.centerCode, searchTerm))
         ).subscribe(members => {
+            this.isMemberSelected = false;
             this.members = members;
         });
     }
@@ -114,31 +116,17 @@ export class CompletedTrainingComponent implements OnInit {
     }
 
     selectMember(member: Member) {
+        this.isMemberSelected = true;
         if (this.centerCode === null) {
             return;
         }
-        console.log('hello1')
-        this.rowData = [
-            {
-                "center_code": "amitabha",
-                "trainingName": "1. Kezdő modul",
-                "email": "david.harsfalvi@gmail.com",
-                "completionDate": new Date()
-            },
-            {
-                "center_code": "amitabha",
-                "trainingName": "2. Alap modul",
-                "email": "david.harsfalvi@gmail.com",
-                "completionDate": new Date()
-            }
-        ]
-        console.log('hello2')
-        // this.completedTrainingService.getCompletedTraining(this.centerCode, member.email)
-        //     .subscribe(completedTrainings => {
-        //
-        //         this.rowData = this.converToView(completedTrainings);
-        //         console.log(this.rowData);
-        //     });
+        this.selectedMemberName = member.name;
+        this.completedTrainingService.getCompletedTraining(this.centerCode, member.email)
+            .subscribe(completedTrainings => {
+
+                this.rowData = this.converToView(completedTrainings);
+                console.log(this.rowData);
+            });
     }
 
     converToView(completedTrainings: CompletedTraining[]): CompletedTrainingView[] {
