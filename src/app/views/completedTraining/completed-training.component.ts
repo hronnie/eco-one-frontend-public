@@ -57,7 +57,6 @@ export class CompletedTrainingComponent implements OnInit {
             cellEditor: 'datePickerInput',
             editable: true
         },
-        // { field: 'completionDate', headerName: 'Ideje', editable: true },
         {
             headerName: '',
             field: 'delete',
@@ -96,15 +95,12 @@ export class CompletedTrainingComponent implements OnInit {
         },
         onCellValueChanged: (event) => {
             this.updateCompletedDate(event);
-            console.log(event);
         },
         onFirstDataRendered(params) {
             params.api.sizeColumnsToFit();
         },
     };
-
     // AG GRID END
-
 
     constructor(
         private memberService: MemberService,
@@ -130,7 +126,7 @@ export class CompletedTrainingComponent implements OnInit {
             return;
         }
         this.searchControl.valueChanges.pipe(
-            debounceTime(300),
+            debounceTime(500),
             switchMap((searchTerm) => this.memberService.searchMembers(this.centerCode, searchTerm))
         ).subscribe(members => {
             this.isMemberSelected = false;
@@ -151,9 +147,7 @@ export class CompletedTrainingComponent implements OnInit {
         }
         this.completedTrainingService.getCompletedTraining(this.centerCode, this.selectedMemberEmail)
             .subscribe(completedTrainings => {
-
                 this.rowData = this.convertToView(completedTrainings);
-                console.log(this.rowData);
             });
     }
 
@@ -165,11 +159,9 @@ export class CompletedTrainingComponent implements OnInit {
 
         return completedTrainings.map(completedTraining => {
             const training = trainingMap[completedTraining.code];
-
             if (!training) {
                 throw new Error(`Training not found for code: ${completedTraining.code}`);
             }
-
             return {
                 center_code: completedTraining.center_code,
                 trainingName: training.name,
@@ -201,7 +193,7 @@ export class CompletedTrainingComponent implements OnInit {
                 }
         });
         } else {
-            alert('Please select a training and a date.');
+            this.isCreateFailed = true;
         }
     }
 
