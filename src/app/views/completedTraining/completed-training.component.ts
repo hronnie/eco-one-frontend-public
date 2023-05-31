@@ -114,7 +114,7 @@ export class CompletedTrainingComponent implements OnInit {
         }
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.centerCode = localStorage.getItem(LOCAL_STORAGE_KEY_CENTER_CODE);
         this.trainingService.getAllTrainings().subscribe(trainings => {
             this.trainings = trainings;

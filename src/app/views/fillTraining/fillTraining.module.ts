@@ -1,8 +1,9 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ReactiveFormsModule} from '@angular/forms';
+import {CommonModule, DatePipe} from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {
+    AlertModule,
     AvatarModule,
     ButtonGroupModule,
     ButtonModule,
@@ -18,6 +19,9 @@ import {
 import {IconModule} from '@coreui/icons-angular';
 import {FillTrainingRoutingModule} from "./fillTraining-routing.module";
 import {FillTrainingComponent} from "./fillTraining.component";
+import {TrainingService} from "../../services/training.service";
+import {AgGridModule} from "@ag-grid-community/angular";
+import {SharedModule} from "../../shared/shared.module";
 
 
 @NgModule({
@@ -31,14 +35,18 @@ import {FillTrainingComponent} from "./fillTraining.component";
         GridModule,
         ProgressModule,
         ReactiveFormsModule,
+        FormsModule,
         ButtonModule,
         FormModule,
         ButtonModule,
         ButtonGroupModule,
         AvatarModule,
-        TableModule
+        TableModule,
+        AgGridModule,
+        AlertModule,
+        SharedModule
     ],
-    declarations: [FillTrainingComponent]
+    declarations: [FillTrainingComponent],
 })
 export class FillTrainingModule {
 }

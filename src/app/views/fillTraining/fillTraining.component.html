@@ -1,7 +1,91 @@
 <c-card>
     <c-card-header>
-        <strong>Tanfolyam felvitele</strong>
+        <strong>Tanfolyam kiválasztása</strong>
+        <div class="alert-area">
+            <c-alert [(visible)]="isDeleteFailed"
+                     [dismissible]="true"
+                     color="danger"
+                     fade
+                     *ngIf="isDeleteFailed">
+                <strong>Elvégzett tanfolyam törlése nem sikerült ismeretlen hiba miatt!</strong>
+            </c-alert>
+            <c-alert [(visible)]="isCreateFailed"
+                     [dismissible]="true"
+                     color="danger"
+                     fade
+                     *ngIf="isCreateFailed">
+                <strong>Elvégzett tanfolyam létrehozása nem sikerült ismeretlen hiba miatt!</strong>
+            </c-alert>
+            <c-alert [(visible)]="isDeleteSuccessful"
+                     [dismissible]="true"
+                     color="success"
+                     fade
+                     *ngIf="isDeleteSuccessful">
+                <strong>Tanfolyam felvitele törlése sikeres volt!</strong>
+            </c-alert>
+            <c-alert [(visible)]="isCreateSuccessful"
+                     [dismissible]="true"
+                     color="success"
+                     fade
+                     *ngIf="isCreateSuccessful">
+                <strong>Tanfolyam felvitele sikeres volt!</strong>
+            </c-alert>
+        </div>
     </c-card-header>
     <c-card-body>
+        <div>
+            <div class="form-row align-items-center mb-3">
+                <div class="col-auto">
+                    <label for="training" class="mr-2">Tanfolyam</label>
+                    <select id="training" [(ngModel)]="selectedTraining" class="form-control">
+                        <option value="" disabled selected>Válassz egy tanfolyamot</option>
+                        <option *ngFor="let training of trainings" [value]="training.code">{{ training.name }}</option>
+                    </select>
+                </div>
+
+                <div class="col-auto add-button">
+                    <label for="date" class="mr-2">Tanfolyam időpontja:</label>
+                    <input id="date" type="date" [(ngModel)]="selectedDate" class="form-control">
+                </div>
+            </div>
+
+        </div>
+    </c-card-body>
+</c-card>
+
+<hr>
+
+<c-card>
+    <c-card-header>
+        <strong>Tanítványok hozzáadása</strong>
+    </c-card-header>
+    <c-card-body>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Tanítvány keresése..." [formControl]="searchControl">
+        </div>
+        <div class="member-list" *ngIf="members.length > 0 && !isMemberSelected">
+            <div class="col-sm-3" id="myScrollspy">
+                <div class="list-group">
+                    <a class="list-group-item list-group-item-action search-result-row" *ngFor="let member of members" (click)="selectMember(member)">{{ member.name }}</a>
+                </div>
+            </div>
+        </div>
+        <div>
+
+            <ag-grid-angular
+                    style="width: 100%; height: 100%;"
+                    class="ag-theme-alpine"
+                    [rowData]="rowData"
+                    [columnDefs]="columnDefs"
+                    [defaultColDef]="defaultColDef"
+                    [gridOptions]="gridOptions"
+                    (firstDataRendered)="onFirstDataRendered($event)"
+                    [frameworkComponents]="frameworkComponents"
+            ></ag-grid-angular>
+        </div>
+        <ul>
+            <li *ngFor="let item of selectedMembers">{{item.name}}</li>
+        </ul>
+
     </c-card-body>
 </c-card>

@@ -68,7 +68,6 @@ export class StudentComponent implements OnInit{
         },
         onCellValueChanged: (event) => {
             this.updateMember(event);
-            console.log(event);
         },
         onFirstDataRendered(params) {
             params.api.sizeColumnsToFit();
@@ -106,7 +105,6 @@ export class StudentComponent implements OnInit{
         this.memberService.getAllMembers(this.centerCode).subscribe({
             next: (response) => {
                 this.rowData = response;
-                console.table(response);
             },
             error: (error) => {
                 console.log(error);
