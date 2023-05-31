@@ -32,11 +32,20 @@ export class CompletedTrainingComponent implements OnInit {
     selectedTraining: string = '';
     selectedDate: string = '';
 
+    isDeleteSuccessful = false;
+    isDeleteFailed = false;
+    isEditSuccessful = false;
+    isEditFailed = false;
+    isCreateSuccessful = false;
+    isCreateFailed = false;
+
+    trainingNameMap: Map<string, string> = new Map<string, string>();
+
+
     // AG GRID START
     frameworkComponents: any;
     rowData: CompletedTrainingView[] = [];
     public gridApi: any;
-    public gridColumnApi: any;
     columnDefs = [
         { field: 'trainingName', headerName: 'Tanfolyam', editable: false },
         {
@@ -113,6 +122,9 @@ export class CompletedTrainingComponent implements OnInit {
         this.centerCode = localStorage.getItem(LOCAL_STORAGE_KEY_CENTER_CODE);
         this.trainingService.getAllTrainings().subscribe(trainings => {
             this.trainings = trainings;
+            this.trainings.forEach(training => {
+                this.trainingNameMap.set(training.name, training.code);
+            });
         });
         if (this.centerCode === null) {
             return;
@@ -124,27 +136,6 @@ export class CompletedTrainingComponent implements OnInit {
             this.isMemberSelected = false;
             this.members = members;
         });
-    }
-
-    addTraining() {
-        if (this.selectedTraining && this.selectedDate && this.centerCode) {
-            const formattedDate = this.datePipe.transform(this.selectedDate, 'yyyy-MM-dd');
-            if (!formattedDate) {
-                return;
-            }
-            this.completedTrainingService.addTraining(this.centerCode, this.selectedTraining, this.selectedMemberEmail, formattedDate).subscribe(
-                response => {
-                    this.loadCompletedTrainings();
-                }
-            );
-        } else {
-            alert('Please select a training and a date.');
-        }
-    }
-
-
-    deleteCompletedTraining() {
-
     }
 
     selectMember(member: Member) {
@@ -161,12 +152,12 @@ export class CompletedTrainingComponent implements OnInit {
         this.completedTrainingService.getCompletedTraining(this.centerCode, this.selectedMemberEmail)
             .subscribe(completedTrainings => {
 
-                this.rowData = this.converToView(completedTrainings);
+                this.rowData = this.convertToView(completedTrainings);
                 console.log(this.rowData);
             });
     }
 
-    converToView(completedTrainings: CompletedTraining[]): CompletedTrainingView[] {
+    convertToView(completedTrainings: CompletedTraining[]): CompletedTrainingView[] {
         const trainingMap: { [code: string]: Training } = {};
         this.trainings.forEach(training => {
             trainingMap[training.code] = training;
@@ -188,11 +179,70 @@ export class CompletedTrainingComponent implements OnInit {
         });
     }
 
-    private updateCompletedDate(event: CellValueChangedEvent<any>) {
-
-    }
-
     onFirstDataRendered(params: any) {
         params.api.sizeColumnsToFit();
+    }
+
+    addTraining() {
+        this.isCreateSuccessful = false;
+        this.isCreateFailed = false;
+        if (this.selectedTraining && this.selectedDate && this.centerCode) {
+            const formattedDate = this.datePipe.transform(this.selectedDate, 'yyyy-MM-dd');
+            if (!formattedDate) {
+                return;
+            }
+            this.completedTrainingService.addTraining(this.centerCode, this.selectedTraining, this.selectedMemberEmail, formattedDate).subscribe({
+                next: response => {
+                        this.loadCompletedTrainings();
+                        this.isCreateSuccessful = true;
+                    },
+                error: error => {
+                    this.isCreateFailed = true;
+                }
+        });
+        } else {
+            alert('Please select a training and a date.');
+        }
+    }
+
+    updateCompletedDate(event: CellValueChangedEvent<any>) {
+        this.isEditSuccessful = false;
+        this.isEditFailed = false;
+        if (!this.centerCode) {
+            return;
+        }
+        if (event.newValue !== event.oldValue) {
+            let updatedCompletedTraining = {...event.data};
+            updatedCompletedTraining[event.column?.getColId()] = event.newValue;
+            this.completedTrainingService.updateTraining(this.centerCode, this.trainingNameMap.get(updatedCompletedTraining?.trainingName) || '', updatedCompletedTraining.email, updatedCompletedTraining.completionDate).subscribe({
+                next: (response) => {
+                    this.isEditSuccessful = true;
+                    console.log("Completed training updated successfully");
+                },
+                error: (error) => {
+                    this.isEditFailed = true;
+                    console.error("Error updating Completed training: ", error);
+                }
+            });
+        }
+    }
+
+    deleteCompletedTraining(params: any) {
+        this.isDeleteSuccessful = false;
+        this.isDeleteFailed = false;
+        if (this.centerCode === null) {
+            this.isDeleteFailed = true;
+            return;
+        }
+        this.completedTrainingService.deleteTraining(this.centerCode, this.trainingNameMap.get(params?.data?.trainingName) || '', this.selectedMemberEmail).subscribe({
+            next: (response) => {
+                this.isDeleteSuccessful = true;
+                this.rowData = this.rowData.filter(training => training?.trainingName !== params?.data?.trainingName);
+            },
+            error: (error) => {
+                this.isDeleteFailed = true;
+                console.error("Error deleting member: ", error);
+            }
+        });
     }
 }

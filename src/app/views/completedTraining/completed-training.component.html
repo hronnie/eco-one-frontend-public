@@ -1,6 +1,50 @@
 <c-card>
     <c-card-header>
         <strong>Elvégzett tanfolyamok</strong>
+        <div class="alert-area">
+            <c-alert [(visible)]="isDeleteFailed"
+                     [dismissible]="true"
+                     color="danger"
+                     fade
+                     *ngIf="isDeleteFailed">
+                <strong>Elvégzett tanfolyam törlése nem sikerült ismeretlen hiba miatt!</strong>
+            </c-alert>
+            <c-alert [(visible)]="isEditFailed"
+                     [dismissible]="true"
+                     color="danger"
+                     fade
+                     *ngIf="isEditFailed">
+                <strong>Elvégzett tanfolyam szerkesztése nem sikerült ismeretlen hiba miatt!</strong>
+            </c-alert>
+            <c-alert [(visible)]="isCreateFailed"
+                     [dismissible]="true"
+                     color="danger"
+                     fade
+                     *ngIf="isCreateFailed">
+                <strong>Elvégzett tanfolyam létrehozása nem sikerült ismeretlen hiba miatt!</strong>
+            </c-alert>
+            <c-alert [(visible)]="isDeleteSuccessful"
+                     [dismissible]="true"
+                     color="success"
+                     fade
+                     *ngIf="isDeleteSuccessful">
+                <strong>Elvégzett tanfolyam törlése sikeres volt!</strong>
+            </c-alert>
+            <c-alert [(visible)]="isEditSuccessful"
+                     [dismissible]="true"
+                     color="success"
+                     fade
+                     *ngIf="isEditSuccessful">
+                <strong>Elvégzett tanfolyam szerkesztése sikeres volt!</strong>
+            </c-alert>
+            <c-alert [(visible)]="isCreateSuccessful"
+                     [dismissible]="true"
+                     color="success"
+                     fade
+                     *ngIf="isCreateSuccessful">
+                <strong>Elvégzett tanfolyam létrehozása sikeres volt!</strong>
+            </c-alert>
+        </div>
     </c-card-header>
     <c-card-body>
         <div class="form-group">

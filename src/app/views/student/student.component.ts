@@ -177,7 +177,6 @@ export class StudentComponent implements OnInit{
                 console.error("Error deleting member: ", error);
             }
         });
-
     }
 
     onFirstDataRendered(params: any) {

@@ -26,4 +26,17 @@ export class CompletedTrainingService {
         };
         return this.http.post(url, completedTraining);
     }
+
+    updateTraining(centerCode: string, trainingCode: string, email: string, date: string): Observable<any> {
+        const url = `${this.apiUrl}/${centerCode}/completedTrainings/${trainingCode}/${email}`;
+        const updatedCompletedTraining = {
+            completionDate: date
+        };
+        return this.http.put(url, updatedCompletedTraining);
+    }
+
+    deleteTraining(centerCode: string, trainingCode: string, email: string) {
+        const url = `${this.apiUrl}/${centerCode}/completedTrainings/${trainingCode}/${email}`;
+        return this.http.delete(url);
+    }
 }
