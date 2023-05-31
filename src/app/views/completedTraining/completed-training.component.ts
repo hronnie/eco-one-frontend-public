@@ -13,6 +13,8 @@ import {CompletedTrainingView} from "../../interfaces/completedTrainingView.mode
 import {Training} from "../../interfaces/training.model";
 import {CellValueChangedEvent, GridOptions} from "ag-grid-community";
 import {DeleteButtonRendererComponent} from "../../components/aggrid/deleteButtonRenderer.component";
+import {DatePickerInputComponent} from "../../components/aggrid/datePickerInput.component";
+import {DatePipe} from "@angular/common";
 
 @Component({
     templateUrl: 'completed-training.component.html',
@@ -34,8 +36,16 @@ export class CompletedTrainingComponent implements OnInit {
     public gridColumnApi: any;
     columnDefs = [
         { field: 'trainingName', headerName: 'Tanfolyam', editable: false },
-        { field: 'email', headerName: 'Email', editable: false },
-        { field: 'completionDate', headerName: 'Ideje', editable: true },
+        {
+            headerName: 'Ideje',
+            field: 'completionDate',
+            cellRenderer: (data: any) => {
+                return this.datePipe.transform(data.value, 'yyyy-MM-dd');
+            },
+            cellEditor: 'datePickerInput',
+            editable: true
+        },
+        // { field: 'completionDate', headerName: 'Ideje', editable: true },
         {
             headerName: '',
             field: 'delete',
@@ -87,10 +97,12 @@ export class CompletedTrainingComponent implements OnInit {
     constructor(
         private memberService: MemberService,
         private trainingService: TrainingService,
-        private completedTrainingService: CompletedTrainingService
+        private completedTrainingService: CompletedTrainingService,
+        private datePipe: DatePipe
     ) {
         this.frameworkComponents = {
             buttonRenderer: DeleteButtonRendererComponent,
+            datePickerInput: DatePickerInputComponent,
         }
     }
 

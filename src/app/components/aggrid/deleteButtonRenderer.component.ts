@@ -3,7 +3,8 @@ import { ICellRendererAngularComp } from "ag-grid-angular";
 
 @Component({
     selector: 'button-renderer',
-    template: `<button cButton color="danger" (click)="onClick($event)">Törlés</button>`
+    template: `<button cButton color="danger" (click)="onClick($event)">Törlés</button>`,
+    styleUrls: ['deleteButtonRenderer.component.scss']
 })
 export class DeleteButtonRendererComponent implements ICellRendererAngularComp {
     params: any;
