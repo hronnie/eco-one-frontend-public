@@ -52,6 +52,11 @@ const routes: Routes = [
                 loadChildren: () =>
                     import('./views/completedTraining/completedTraining.module').then((m) => m.CompletedTrainingModule)
             },
+            {
+                path: 'fill-training',
+                loadChildren: () =>
+                    import('./views/fillTraining/fillTraining.module').then((m) => m.FillTrainingModule)
+            },
         ]
     },
     {
