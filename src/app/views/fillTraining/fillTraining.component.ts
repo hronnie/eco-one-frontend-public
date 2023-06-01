@@ -28,10 +28,8 @@ export class FillTrainingComponent implements OnInit {
     trainings: Training[] = [];
     selectedTraining: string = '';
     selectedDate: string = '';
-    isDeleteSuccessful = false;
-    isDeleteFailed = false;
-    isCreateSuccessful = false;
-    isCreateFailed = false;
+    isSendSuccessful = false;
+    isSendFailed = false;
     trainingNameMap: Map<string, string> = new Map<string, string>();
 
     // AG GRID START
@@ -87,8 +85,6 @@ export class FillTrainingComponent implements OnInit {
     };
     // AG GRID END
 
-
-
     constructor(
         private memberService: MemberService,
         private trainingService: TrainingService,
@@ -121,12 +117,12 @@ export class FillTrainingComponent implements OnInit {
         });
     }
 
-    deleteMember(params: any) {
+    deleteMember(params: any): void {
         const email = params?.data?.email;
         this.rowData = this.rowData.filter(item => item.email !== email);
     }
 
-    selectMember(member: Member) {
+    selectMember(member: Member): void {
         this.isMemberSelected = true;
         if (!this.rowData.every(item => item?.email !== member?.email)) {
             return;
@@ -134,11 +130,26 @@ export class FillTrainingComponent implements OnInit {
         this.rowData = [...this.rowData, member]
     }
 
-    selectTraining() {
-
+    onFirstDataRendered(params: any): void {
+        params.api.sizeColumnsToFit();
     }
 
-    onFirstDataRendered(params: any) {
-        params.api.sizeColumnsToFit();
+    onSubmit(): void {
+        if (!this.centerCode) {
+            return;
+        }
+        const emailList = this.rowData.map(item => item.email);
+        this.completedTrainingService.fillTraining(this.centerCode, this.selectedTraining, emailList, this.selectedDate).subscribe({
+            next: response => {
+                this.isSendSuccessful = true;
+                this.selectedDate = "";
+                this.selectedTraining = "";
+                this.rowData = [];
+            },
+            error: error => {
+                this.isSendFailed = true;
+                console.error(error);
+            }
+        });
     }
 }

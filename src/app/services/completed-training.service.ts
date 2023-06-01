@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {CompletedTraining} from "../interfaces/completedTraining.model";
@@ -25,6 +25,16 @@ export class CompletedTrainingService {
             completionDate: completionDate
         };
         return this.http.post(url, completedTraining);
+    }
+
+    fillTraining(centerCode: string, trainingCode: string, emailList: string[], completionDate: string): Observable<void> {
+        const url = `${this.apiUrl}/${centerCode}/completedTrainings/bulk`;
+        const completedTraining = {
+            code: trainingCode,
+            emailList,
+            completionDate: completionDate
+        };
+        return this.http.post<void>(url, completedTraining);
     }
 
     updateTraining(centerCode: string, trainingCode: string, email: string, date: string): Observable<any> {
