@@ -20,3 +20,15 @@ $enable-rtl: true;
 @import "~ag-grid-community/styles/ag-grid.css";
 @import "~ag-grid-community/styles/ag-theme-alpine.css";
 
+.divider-space-up {
+  padding-top: 15px;
+}
+.divider-space-down {
+  padding-down: 15px;
+}
+.divider-space-both {
+  padding-down: 15px;
+  padding-top: 15px;
+
+}
+

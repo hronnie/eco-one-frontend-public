@@ -25,7 +25,6 @@ export class FillTrainingComponent implements OnInit {
     isMemberSelected = false;
     centerCode: string | null = null;
     members: Member[] = [];
-    selectedMembers: Set<Member> = new Set<Member>();
     trainings: Training[] = [];
     selectedTraining: string = '';
     selectedDate: string = '';
@@ -89,6 +88,7 @@ export class FillTrainingComponent implements OnInit {
     // AG GRID END
 
 
+
     constructor(
         private memberService: MemberService,
         private trainingService: TrainingService,
@@ -122,11 +122,16 @@ export class FillTrainingComponent implements OnInit {
     }
 
     deleteMember(params: any) {
-
+        const email = params?.data?.email;
+        this.rowData = this.rowData.filter(item => item.email !== email);
     }
+
     selectMember(member: Member) {
-        this.selectedMembers.add(member);
-        this.rowData = Array.from(this.selectedMembers);
+        this.isMemberSelected = true;
+        if (!this.rowData.every(item => item?.email !== member?.email)) {
+            return;
+        }
+        this.rowData = [...this.rowData, member]
     }
 
     selectTraining() {
