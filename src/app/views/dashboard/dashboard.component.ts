@@ -23,12 +23,20 @@ export class DashboardComponent implements OnInit {
         }
         this.dashboardInfoService.getDashboardInfo(this.centerCode).subscribe({
             next: response => {
-                this.dashboardInfo = response;
+                this.dashboardInfo = this.sortDashboardInfoByStudentTrainingCount(response);
             },
             error: error => {
 
             }
         })
+    }
+
+    sortDashboardInfoByStudentTrainingCount(dashboardInfo: DashboardInfo): DashboardInfo {
+        let sortedDashboardInfo = { ...dashboardInfo };  // Create a shallow copy of the object to avoid modifying the original
+
+        sortedDashboardInfo.studentTrainings.sort((a, b) => b.noStudents - a.noStudents);
+
+        return sortedDashboardInfo;
     }
 
 }
