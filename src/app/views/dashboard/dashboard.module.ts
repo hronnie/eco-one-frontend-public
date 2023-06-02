@@ -12,7 +12,7 @@ import {
     NavModule,
     ProgressModule,
     TableModule,
-    TabsModule
+    TabsModule, WidgetModule
 } from '@coreui/angular-pro';
 
 import {IconModule} from '@coreui/icons-angular';
@@ -20,6 +20,7 @@ import {IconModule} from '@coreui/icons-angular';
 import {DashboardRoutingModule} from './dashboard-routing.module';
 import {DashboardComponent} from './dashboard.component';
 import {HttpClientModule} from "@angular/common/http";
+import {SharedModule} from "../../shared/shared.module";
 
 @NgModule({
     imports: [
@@ -38,7 +39,9 @@ import {HttpClientModule} from "@angular/common/http";
         ButtonGroupModule,
         AvatarModule,
         TableModule,
-        HttpClientModule
+        HttpClientModule,
+        WidgetModule,
+        SharedModule
     ],
     declarations: [DashboardComponent]
 })

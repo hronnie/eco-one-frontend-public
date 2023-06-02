@@ -1,8 +1,122 @@
-<c-card>
-    <c-card-header>
-        <strong>Üdv az ECO One alkalmazásban</strong>
-    </c-card-header>
-    <c-card-body>
-        Ebben az alkalmazásban az ECO tanfolyamokkal, tanítványokkal és később páciensekkel kapcsolatos dolgokat lehet majd elvégezni.
-    </c-card-body>
-</c-card>
+<h1>{{centerDesc}} kezelő</h1>
+<c-row>
+    <c-col sm="6" xl="3">
+        <c-widget-stat-b
+            #widgetStatB1inv="cWidgetStatB"
+            [title]="'tanítvány'"
+            class="mb-4"
+            color="success-gradient"
+            inverse
+            text="végzett bármilyen tanfolyamot"
+            value="{{dashboardInfo?.totalNoStudents}}"
+        >
+            <br><br><br>
+            <c-progress [white]="widgetStatB1inv.inverse" class="my-2" thin>
+                <c-progress-bar [value]="100"></c-progress-bar>
+            </c-progress>
+        </c-widget-stat-b>
+    </c-col>
+    <c-col sm="6" xl="3">
+        <c-widget-stat-b
+            #widgetStatB1inv="cWidgetStatB"
+            [title]="'tanfolyam'"
+            class="mb-4"
+            color="primary"
+            inverse
+            text="Ennyi fajta tanfolyam van"
+            value="{{dashboardInfo?.totalNoTrainings}}"
+        >
+            <br><br><br>
+
+            <c-progress [white]="widgetStatB1inv.inverse" class="my-2" thin>
+                <c-progress-bar [value]="100"></c-progress-bar>
+            </c-progress>
+        </c-widget-stat-b>    </c-col>
+    <c-col sm="6" xl="3">
+        <c-widget-stat-b
+            #widgetStatB1inv="cWidgetStatB"
+            [title]="'tanítvány'"
+            class="mb-4"
+            color="warning-gradient"
+            inverse
+            text="végzett ebben a hónapban"
+            value="{{dashboardInfo?.totalNoStudentsInMonth}}"
+        >
+            <br><br><br>
+            <c-progress [white]="widgetStatB1inv.inverse" class="my-2" thin>
+                <c-progress-bar [value]="25.9"></c-progress-bar>
+            </c-progress>
+        </c-widget-stat-b>
+    </c-col>
+    <c-col sm="6" xl="3">
+        <c-widget-stat-b
+            #widgetStatB1inv="cWidgetStatB"
+            [title]="'tanítvány'"
+            class="mb-4"
+            color="danger-gradient"
+            inverse
+            text="végzett ebben az évben"
+            value="{{dashboardInfo?.totalNoStudentsInYear}}"
+        >
+            <br><br><br>
+            <c-progress [white]="widgetStatB1inv.inverse" class="my-2" thin>
+                <c-progress-bar [value]="75.9"></c-progress-bar>
+            </c-progress>
+        </c-widget-stat-b>    </c-col>
+</c-row>
+
+<c-row>
+    <c-col xs>
+        <c-card class="mb-4">
+            <c-card-header>Tanfolyamok</c-card-header>
+            <c-card-body>
+                <table
+                        [hover]="true"
+                        [responsive]="true"
+                        [striped]="true"
+                        align="middle"
+                        cTable
+                        class="mb-0 border"
+                >
+                    <thead cTableColor="light">
+                    <tr>
+                        <th>Tanfolyam</th>
+                        <th class="text-center">Hányan</th>
+                        <th>Milyen arányban</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let student of dashboardInfo?.studentTrainings; index as i">
+                        <td>
+                            <div>{{ student.name }}</div>
+                        </td>
+                        <td class="text-center">
+                            {{ student.noStudents }}
+                        </td>
+                        <td>
+                            <div class="clearfix">
+                                <div class="float-start">
+                                    <strong>{{student.noStudents | percentage:dashboardInfo?.totalNoStudents}}%</strong>
+                                </div>
+                                <div class="float-end">
+                                    <small class="text-medium-emphasis">
+                                        {{student.noStudents | percentage:dashboardInfo?.totalNoStudents}}%
+                                    </small>
+                                </div>
+                            </div>
+                            <c-progress thin
+                            >
+                                <c-progress-bar
+                                        [value]="student.noStudents | percentage:dashboardInfo?.totalNoStudents"
+                                        color="success-gradient"
+                                ></c-progress-bar
+                                >
+                            </c-progress>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </c-card-body>
+        </c-card>
+    </c-col>
+</c-row>
