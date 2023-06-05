@@ -20,12 +20,14 @@ import {IconModule} from "@coreui/icons-angular";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AgGridModule} from "ag-grid-angular";
 import {PercentagePipe} from "../pipes/percentage.pipe";
+import {AddStudentComponent} from "../components/add-student/add-student.component";
 
 @NgModule({
     declarations: [
         DeleteButtonRendererComponent,
         DatePickerInputComponent,
-        PercentagePipe
+        PercentagePipe,
+        AddStudentComponent
     ],
     imports: [
         CommonModule,
@@ -67,6 +69,7 @@ import {PercentagePipe} from "../pipes/percentage.pipe";
         AgGridModule,
         AlertModule,
         PercentagePipe,
+        AddStudentComponent,
     ],
     providers: [TrainingService]
 })

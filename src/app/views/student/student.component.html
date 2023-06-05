@@ -57,52 +57,13 @@
                 (firstDataRendered)="onFirstDataRendered($event)"
                 [frameworkComponents]="frameworkComponents"
         ></ag-grid-angular>
-        <div class="card">
-            <div class="card-header">
-                <strong>Tanítvány hozzáadása</strong>
 
-            </div>
-            <div class="card-body">
-                <form [formGroup]="newMemberForm" (ngSubmit)="createMember()">
-                    <!-- Name input field -->
-                    <div class="form-group">
-                        <label for="name">Név</label>
-                        <input type="text" id="name" formControlName="name" class="form-control" [ngClass]="{'is-invalid': newMemberForm?.controls?.name.invalid && newMemberForm?.controls?.name.touched}">
-                        <div class="invalid-feedback" *ngIf="newMemberForm?.controls?.name.invalid && newMemberForm?.controls?.name.touched">
-                            Név kitöltése kötelező. (minimum 5, maximum 100 karakter)
-                        </div>
-                    </div>
-
-                    <!-- Email input field -->
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" formControlName="email" class="form-control" [ngClass]="{'is-invalid': newMemberForm?.controls?.email.invalid && newMemberForm?.controls?.email.touched}">
-                        <div class="invalid-feedback" *ngIf="newMemberForm?.controls?.email.invalid && newMemberForm?.controls?.email.touched">
-                            Email kitöltése kötelező. (minimum 5, maximum 100 karakter)
-                        </div>
-                    </div>
-
-                    <!-- Mobile input field -->
-                    <div class="form-group">
-                        <label for="mobile">Telefon</label>
-                        <input type="text" id="mobile" formControlName="mobile" class="form-control" [ngClass]="{'is-invalid': newMemberForm?.controls?.mobile.invalid && newMemberForm?.controls?.mobile.touched}">
-                        <div class="invalid-feedback" *ngIf="newMemberForm?.controls?.mobile.invalid && newMemberForm?.controls?.mobile.touched">
-                            Telefon kitöltése kötelező, csak számok és + jel az elfogadott.
-                        </div>
-                    </div>
-
-                    <!-- Notes input field -->
-                    <div class="form-group">
-                        <label for="notes">Megjegyzés</label>
-                        <input type="text" id="notes" formControlName="notes" class="form-control" [ngClass]="{'is-invalid': newMemberForm?.controls?.notes?.invalid && newMemberForm?.controls?.notes?.touched}">
-                        <div class="invalid-feedback" *ngIf="newMemberForm?.controls?.notes?.invalid && newMemberForm?.controls?.notes?.touched">
-                            Maximum 200 karakter lehet.
-                        </div>
-                    </div>
-                    <button type="submit" cButton color="primary" class="add-member-button">Hozzáadás</button>
-                </form>
-            </div>
-        </div>
 
     </c-card-body>
 </c-card>
+<app-add-student (isCreateFailed)="isCreateFailedSet($event)"
+                (isCreateSuccessful)="isCreateSuccessfulSet($event)"
+                (loadMembers)="loadMembers()"
+                (pushNewMemberToRowData)="pushNewMemberToRowData($event)">
+
+</app-add-student>

@@ -13,7 +13,6 @@ import {DeleteButtonRendererComponent} from "../../components/aggrid/deleteButto
 })
 export class StudentComponent implements OnInit{
 
-    newMemberForm: FormGroup | undefined;
     centerCode: string | null = null;
     isDeleteSuccessful = false;
     isDeleteFailed = false;
@@ -83,12 +82,6 @@ export class StudentComponent implements OnInit{
 
     ngOnInit(): void {
         this.centerCode = localStorage.getItem(LOCAL_STORAGE_KEY_CENTER_CODE);
-        this.newMemberForm = new FormGroup({
-            'name': new FormControl(null, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
-            'email': new FormControl(null, [Validators.required, Validators.email, Validators.maxLength(100)]),
-            'mobile': new FormControl(null, [Validators.required, Validators.pattern('^[0-9+]+$')]),
-            'notes': new FormControl(null, [Validators.maxLength(200)]),
-        });
         this.loadMembers();
     }
 
@@ -112,31 +105,6 @@ export class StudentComponent implements OnInit{
         });
     }
 
-    createMember() {
-        this.isCreateSuccessful = false;
-        this.isCreateFailed = false;
-        if (this.newMemberForm === undefined) {
-            return;
-        }
-        const memberData: Member = this.newMemberForm.value;
-        if (this.centerCode === null) {
-            this.centerCode = '';
-        }
-        this.memberService.createMember(this.centerCode, memberData).subscribe({
-            next: (response) => {
-                this.isCreateSuccessful = true;
-                this.loadMembers();
-                console.log('Member created successfully', response);
-            },
-            error: (error) => {
-                this.isCreateFailed = true;
-                console.error('There was an error while creating the member', error);
-            }
-        });
-
-        this.rowData.push(this.newMemberForm.value);
-        this.newMemberForm.reset();
-    }
 
     updateMember(event: CellValueChangedEvent) {
         this.isEditSuccessful = false;
@@ -179,5 +147,17 @@ export class StudentComponent implements OnInit{
 
     onFirstDataRendered(params: any) {
         params.api.sizeColumnsToFit();
+    }
+
+    isCreateFailedSet(value: boolean) {
+        this.isCreateFailed = value;
+    }
+
+    isCreateSuccessfulSet(value: boolean) {
+        this.isCreateSuccessful = value;
+    }
+
+    pushNewMemberToRowData(member: Member) {
+        this.rowData.push(member);
     }
 }
