@@ -81,17 +81,21 @@
                     <thead cTableColor="light">
                     <tr>
                         <th>Tanfolyam</th>
-                        <th class="text-center">Hányan</th>
+                        <th class="text-center">Hányan végezték el</th>
+                        <th class="text-center">Hányan mehetnének</th>
                         <th>Milyen arányban</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let student of dashboardInfo?.studentTrainings; index as i">
+                        <tr *ngFor="let student of dashboardInfo?.studentTrainings; index as i">
                         <td>
                             <div>{{ student.name }}</div>
                         </td>
                         <td class="text-center">
                             {{ student.noStudents }}
+                        </td>
+                        <td class="text-center">
+                            {{ dashboardInfo.studentPrereqTrainings[i].noStudents }}
                         </td>
                         <td>
                             <div class="clearfix">
