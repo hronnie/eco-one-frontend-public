@@ -31,6 +31,8 @@ export class FillTrainingComponent implements OnInit {
     isSendSuccessful = false;
     isSendFailed = false;
     trainingNameMap: Map<string, string> = new Map<string, string>();
+    isCreateSuccessful = false;
+    isCreateFailed = false;
 
     // AG GRID START
     frameworkComponents: any;
@@ -151,5 +153,22 @@ export class FillTrainingComponent implements OnInit {
                 console.error(error);
             }
         });
+    }
+
+
+    isCreateFailedSet(value: boolean) {
+        this.isCreateFailed = value;
+    }
+
+    isCreateSuccessfulSet(value: boolean) {
+        this.isCreateSuccessful = value;
+    }
+
+    pushNewMemberToRowData(member: Member) {
+        this.selectMember(member);
+    }
+
+    loadMembers() {
+        // empty method
     }
 }
