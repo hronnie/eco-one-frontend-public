@@ -35,7 +35,7 @@ const routes: Routes = [
             {
                 path: 'email-template',
                 loadChildren: () =>
-                    import('./views/emailTemplate/emailTemplate.module').then((m) => m.EmailTemplateModule)
+                    import('./views/sync/sync.module').then((m) => m.SyncModule)
             },
             {
                 path: 'student',
@@ -43,9 +43,9 @@ const routes: Routes = [
                     import('./views/student/student.module').then((m) => m.StudentModule)
             },
             {
-                path: 'invitation',
+                path: 'sync',
                 loadChildren: () =>
-                    import('./views/invitation/invitation.module').then((m) => m.InvitationModule)
+                    import('./views/sync/sync.module').then((m) => m.SyncModule)
             },
             {
                 path: 'completed-training',

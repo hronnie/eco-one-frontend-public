@@ -1,14 +1,14 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {EmailTemplateComponent} from './emailTemplate.component';
+import {SyncComponent} from './sync.component';
 
 const routes: Routes = [
     {
         path: '',
-        component: EmailTemplateComponent,
+        component: SyncComponent,
         data: {
-            title: $localize`Email sablonok`
+            title: $localize`Szinkronizálás`
         }
     }
 ];
@@ -17,5 +17,5 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class EmailTemplateRoutingModule {
+export class SyncRoutingModule {
 }

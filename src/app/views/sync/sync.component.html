@@ -1,0 +1,24 @@
+<c-card>
+    <c-card-header>
+        <strong>Szinkronizálás a Mailchimp-el</strong>
+        <div class="alert-area">
+            <c-alert [(visible)]="isSyncFailed"
+                     [dismissible]="true"
+                     color="danger"
+                     fade
+                     *ngIf="isSyncFailed">
+                <strong>Mailchimp szinkronizáció nem sikerült ismeretlen hiba miatt!</strong>
+            </c-alert>
+            <c-alert [(visible)]="isSyncSuccessful"
+                     [dismissible]="true"
+                     color="success"
+                     fade
+                     *ngIf="isSyncSuccessful">
+                <strong>Mailchimp szinkronizáció sikeres volt!</strong>
+            </c-alert>
+        </div>
+    </c-card-header>
+    <c-card-body>
+        <button cButton color="danger" size="lg" (click)="handleMailchimpSync()">Szinkronizálás</button>
+    </c-card-body>
+</c-card>

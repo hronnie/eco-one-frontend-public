@@ -31,13 +31,12 @@ export const navItems: INavData[] = [
         iconComponent: { name: 'cil-cloud-upload'},
     },
     {
-        name: 'Email sablonok',
-        url: '/email-template',
-        iconComponent: { name: 'cil-envelope-closed'},
+        title: true,
+        name: 'Mailchimp'
     },
     {
-        name: 'Meghívók küldése',
-        url: '/invitation',
-        iconComponent: { name: 'cil-send'},
+        name: 'Szinkronizálás',
+        url: '/sync',
+        iconComponent: { name: 'cil-sync'},
     },
 ];
