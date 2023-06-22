@@ -152,10 +152,12 @@ export class StudentComponent implements OnInit{
             next: (response) => {
                 this.isDeleteSuccessful = true;
                 this.rowData = this.rowData.filter(member => member?.email !== email);
+                this.toggleDeleteConfirm();
             },
             error: (error) => {
                 this.isDeleteFailed = true;
                 console.error("Error deleting member: ", error);
+                this.toggleDeleteConfirm();
             }
         });
     }
