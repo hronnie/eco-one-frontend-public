@@ -67,3 +67,17 @@
                 (pushNewMemberToRowData)="pushNewMemberToRowData($event)">
 
 </app-add-student>
+
+<c-modal id="liveDemoModal" [visible]="visibleDeleteConfirm" (visibleChange)="handleLiveDemoChange($event)">
+    <c-modal-header>
+        <h5 cModalTitle>Tanítvány törlése</h5>
+        <button (click)="toggleDeleteConfirm()" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>Biztos vagy benne, hogy kitörlöd ezt a tanítványt minden adatával együtt?</c-modal-body>
+    <c-modal-footer>
+        <button (click)="toggleDeleteConfirm()" cButton color="secondary">
+            Mégsem
+        </button>
+        <button cButton color="danger" (click)="deleteMember($event)">Törlés</button>
+    </c-modal-footer>
+</c-modal>

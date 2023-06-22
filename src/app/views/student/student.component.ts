@@ -20,6 +20,7 @@ export class StudentComponent implements OnInit{
     isEditFailed = false;
     isCreateSuccessful = false;
     isCreateFailed = false;
+    visibleDeleteConfirm = false;
 
     // AG GRID START
     frameworkComponents: any;
@@ -34,7 +35,7 @@ export class StudentComponent implements OnInit{
             field: 'delete',
             cellRenderer: 'buttonRenderer',
             cellRendererParams: {
-                onClick: this.deleteMember.bind(this),
+                onClick: this.deleteMemberConfirm.bind(this),
                 label: 'Delete'
             },
             maxWidth: 120
@@ -73,6 +74,7 @@ export class StudentComponent implements OnInit{
         },
     };
     // AG GRID END
+    private deleteMemberParams: any;
 
     constructor(private memberService: MemberService) {
         this.frameworkComponents = {
@@ -125,10 +127,23 @@ export class StudentComponent implements OnInit{
         }
     }
 
+    toggleDeleteConfirm() {
+        this.visibleDeleteConfirm = !this.visibleDeleteConfirm;
+    }
+
+    handleLiveDemoChange(event: any) {
+        this.visibleDeleteConfirm = event;
+    }
+
+    deleteMemberConfirm(params: any) {
+        this.deleteMemberParams = params;
+        this.toggleDeleteConfirm();
+    }
+
     deleteMember(params: any) {
         this.isDeleteSuccessful = false;
         this.isDeleteFailed = false;
-        const email = params.data.email;
+        const email = this.deleteMemberParams.data.email;
         if (this.centerCode === null) {
             this.isDeleteFailed = true;
             return;
