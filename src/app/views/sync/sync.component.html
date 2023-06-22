@@ -19,6 +19,13 @@
         </div>
     </c-card-header>
     <c-card-body>
-        <button cButton color="danger" size="lg" (click)="handleMailchimpSync()">Szinkronizálás</button>
+        <button cButton color="danger" size="lg" (click)="handleMailchimpSync()" *ngIf="!isLoading">Szinkronizálás</button>
+        <button cButton class="m-1" disabled *ngIf="isLoading">
+            <c-spinner aria-hidden="true" size="sm"></c-spinner>
+            Folyamatban...
+        </button>
     </c-card-body>
+    <c-card-footer>
+        Ez a folyamat tanítványoktól és tag frissítésektől függően hosszú ideig tarthat, akár percekig is.
+    </c-card-footer>
 </c-card>

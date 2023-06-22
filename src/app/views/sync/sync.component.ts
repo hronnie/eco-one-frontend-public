@@ -11,6 +11,7 @@ export class SyncComponent implements OnInit {
     centerCode: string | null = null;
     isSyncSuccessful = false;
     isSyncFailed = false;
+    isLoading = false;
 
     constructor(private mailchimpoSyncService: MailchimpSyncService) {
     }
@@ -23,11 +24,14 @@ export class SyncComponent implements OnInit {
         if (this.centerCode == null) {
             return;
         }
+        this.isLoading = true;
         this.mailchimpoSyncService.doMailchimpSync(this.centerCode).subscribe({
             next: response => {
                 this.isSyncSuccessful = true;
+                this.isLoading = false;
             },
             error: err => {
+                this.isLoading = false;
                 this.isSyncFailed = true;
                 console.error(err);
             }
