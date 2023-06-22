@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {AuthService} from "../../../services/auth.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {
     LOCAL_STORAGE_KEY_ACCESS_TOKEN,
     LOCAL_STORAGE_KEY_CENTER_DESC, LOCAL_STORAGE_KEY_CENTER_CODE,
@@ -20,7 +20,8 @@ export class LoginComponent {
 
     constructor(private authService: AuthService,
                 private router: Router,
-                private centerService: CenterService) {
+                private centerService: CenterService,
+                private route: ActivatedRoute) {
     }
 
     updateValues() {
@@ -42,7 +43,8 @@ export class LoginComponent {
                         console.log(error);
                     }
                 });
-                this.router.navigate(['/dashboard']);
+                const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+                this.router.navigateByUrl(returnUrl);
             },
             error: (err) => {
                 this.isLoginValid = false;

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {CanActivate, Router} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {LOCAL_STORAGE_KEY_ACCESS_TOKEN} from "../constants/localStorageKeys.constant";
 
 @Injectable({
@@ -10,12 +10,12 @@ export class AuthGuardService implements CanActivate {
     constructor(private router: Router) {
     }
 
-    canActivate(): boolean {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         const token = localStorage.getItem(LOCAL_STORAGE_KEY_ACCESS_TOKEN);
 
         if (!token) {
             // If not logged in, redirect to login page
-            this.router.navigate(['/login']);
+            this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
             return false;
         }
 
