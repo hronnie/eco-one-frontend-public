@@ -83,7 +83,7 @@
                     <tr>
                         <th>Tanfolyam</th>
                         <th class="text-center">Hányan végezték el</th>
-<!--                        <th class="text-center">Hányan mehetnének</th>-->
+                        <th class="text-center">Hányan mehetnének</th>
                         <th>Milyen arányban</th>
                     </tr>
                     </thead>
@@ -95,9 +95,9 @@
                         <td class="text-center">
                             {{ student.noStudents }}
                         </td>
-<!--                        <td class="text-center">-->
-<!--                            {{ dashboardInfo.studentPrereqTrainings[i].noStudents }}-->
-<!--                        </td>-->
+                        <td class="text-center">
+                            {{ getTrainingPrereqByTrainingName(student.name) }}
+                        </td>
                         <td>
                             <div class="clearfix">
                                 <div class="float-start">

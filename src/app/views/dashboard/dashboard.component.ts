@@ -33,10 +33,21 @@ export class DashboardComponent implements OnInit {
 
     sortDashboardInfoByStudentTrainingCount(dashboardInfo: DashboardInfo): DashboardInfo {
         let sortedDashboardInfo = { ...dashboardInfo };  // Create a shallow copy of the object to avoid modifying the original
-
         sortedDashboardInfo.studentTrainings.sort((a, b) => b.noStudents - a.noStudents);
-
         return sortedDashboardInfo;
+    }
+
+    getTrainingPrereqByTrainingName(trainingName: string) {
+        const data = this.dashboardInfo?.studentPrereqTrainings;
+        if (!data) {
+            return 0;
+        }
+        for (let i = 0; i < data?.length; i++) {
+            if (data[i].name === trainingName) {
+                return data[i].noStudents;
+            }
+        }
+        return 0;
     }
 
 }
