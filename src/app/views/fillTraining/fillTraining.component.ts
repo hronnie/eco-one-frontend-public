@@ -102,7 +102,7 @@ export class FillTrainingComponent implements OnInit {
     ngOnInit(): void {
         this.centerCode = localStorage.getItem(LOCAL_STORAGE_KEY_CENTER_CODE);
         this.trainingService.getAllTrainings().subscribe(trainings => {
-            this.trainings = trainings;
+            this.trainings = trainings.sort((a: any, b: any) => a.id - b.id);;
             this.trainings.forEach(training => {
                 this.trainingNameMap.set(training.name, training.code);
             });
