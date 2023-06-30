@@ -13,7 +13,7 @@ export class MailchimpSyncService {
     constructor(private http: HttpClient) {
     }
 
-    doMailchimpSync(center_code: string, selectedDate: string): Observable<void> {
-        return this.http.get<void>(`${this.apiUrl}/${center_code}/mailchimpSync/${selectedDate}`);
+    doMailchimpSync(center_code: string, selectedDate: string, selectedTraining: string): Observable<void> {
+        return this.http.get<void>(`${this.apiUrl}/${center_code}/mailchimpSync/${selectedDate}/${selectedTraining}`);
     }
 }

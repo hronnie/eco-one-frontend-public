@@ -1,10 +1,6 @@
 <c-card>
     <c-card-header>
         <strong>Szinkronizálás a Mailchimp-el</strong>
-        <div class="col-auto add-button divider-space-both" style="max-width: 250px;">
-            <label for="date" class="mr-2 divider-space-down" style="width: 100%">Milyen időponthoz szinkronizáljon:</label>
-            <input id="date" type="date" [(ngModel)]="selectedDate" class="form-control">
-        </div>
         <div class="alert-area">
             <c-alert [(visible)]="isSyncFailed"
                      [dismissible]="true"
@@ -22,8 +18,22 @@
             </c-alert>
         </div>
     </c-card-header>
-    <c-card-body *ngIf="selectedDate">
-        <button cButton color="danger" size="lg" (click)="handleMailchimpSync()" *ngIf="!isLoading">Szinkronizálás</button>
+    <c-card-body>
+        <div class="form-row align-items-center mb-3">
+            <div class="col-auto"  style="max-width: 500px;">
+                <label for="training" class="mr-2">Tanfolyam</label>
+                <select id="training" [(ngModel)]="selectedTraining" class="form-control">
+                    <option value="" disabled selected>Válassz egy tanfolyamot</option>
+                    <option *ngFor="let training of trainings" [value]="training.code">{{ training.name }}</option>
+                </select>
+            </div>
+
+            <div class="col-auto add-button" style="max-width: 200px;">
+                <label for="date" class="mr-2">Tanfolyam időpontja:</label>
+                <input id="date" type="date" [(ngModel)]="selectedDate" class="form-control">
+            </div>
+        </div>
+        <button  cButton color="danger" size="lg" (click)="handleMailchimpSync()" *ngIf="!isLoading && selectedDate">Szinkronizálás</button>
         <button cButton class="m-1" disabled *ngIf="isLoading">
             <c-spinner aria-hidden="true" size="sm"></c-spinner>
             Folyamatban...
